@@ -13,9 +13,9 @@
 
 class Room5 {
 private:
-    void drawWall();
+    void drawWall(GLuint texture);
 public:
-    void drawRoom();
+    void drawRoom(GLuint texture);
 };
 
 #endif /* defined(__Takagism__Room5__) */

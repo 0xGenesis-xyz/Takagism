@@ -9,10 +9,10 @@
 #include <GLUT/GLUT.h>
 #include "Room5.h"
 
-void Room5::drawRoom() {
-    drawWall();
+void Room5::drawRoom(GLuint texture) {
+    drawWall(texture);
 }
 
-void Room5::drawWall() {
+void Room5::drawWall(GLuint texture) {
     
 }

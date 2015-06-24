@@ -10,12 +10,16 @@
 #define __Takagism__Room3__
 
 #include <stdio.h>
+#include "Item.h"
 
 class Room3 {
 private:
-    void drawWall();
+    Item blackRabbit;
+    void drawWall(GLuint texture);
 public:
-    void drawRoom();
+    Room3();
+    void init();
+    void drawRoom(GLuint texture);
 };
 
 #endif /* defined(__Takagism__Room3__) */

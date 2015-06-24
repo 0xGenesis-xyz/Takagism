@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include <GLUT/GLUT.h>
+#include <cv.h>
+#include <highgui.h>
 
 #include "Game.h"
 

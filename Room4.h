@@ -10,12 +10,17 @@
 #define __Takagism__Room4__
 
 #include <stdio.h>
+#include <OpenGL/gl.h>
+#include "Nurbs.h"
 
 class Room4 {
 private:
-    void drawWall();
+    Nurbs nurbs;
+    void drawWall(GLuint texture);
 public:
-    void drawRoom();
+    Room4();
+    void init();
+    void drawRoom(GLuint texture);
 };
 
 #endif /* defined(__Takagism__Room4__) */

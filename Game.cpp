@@ -15,6 +15,7 @@ void Game::init() {
     camera.init();
     x=8;
     y=49;
+    chamber.init();
 }
 
 void Game::drawScene() {

@@ -9,10 +9,19 @@
 #include <GLUT/GLUT.h>
 #include "Room4.h"
 
-void Room4::drawRoom() {
-    drawWall();
+Room4::Room4() {
+//    init();
 }
 
-void Room4::drawWall() {
+void Room4::init() {
+    nurbs.init();
+}
+
+void Room4::drawRoom(GLuint texture) {
+    drawWall(texture);
+    nurbs.drawNurbs();
+}
+
+void Room4::drawWall(GLuint texture) {
     
 }
