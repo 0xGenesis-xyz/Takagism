@@ -25,12 +25,17 @@ private:
     Room3 room3;
     Room4 room4;
     Room5 room5;
+    
+    float doorRotate;
 //    Texture ceilingpaper;
 //    Texture floorpaper;
-    GLuint textures[7];
+    GLuint textures[9];
     void loadTextures();
     void drawCeilingAndFloor();
+    void drawgap(GLuint texture);
+    void drawDoor(GLuint texture);
 public:
+    bool door;
     void init();
     void drawChamber();
     GLint GenList();

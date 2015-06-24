@@ -95,6 +95,9 @@ void keyboard(unsigned char key, int x, int y)
                 game.camera.intensity-=0.1;
             break;
         }
+        case 't': {
+            game.chamber.door=!game.chamber.door;
+        }
 
         default:
             break;

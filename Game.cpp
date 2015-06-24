@@ -22,8 +22,6 @@ void Game::init() {
         toPut[i]=false;
     picked=true;
     key=false;
-    door=false;
-    doorRotate=0.0f;
 }
 
 void Game::drawScene() {
@@ -55,12 +53,6 @@ void Game::drawScene() {
         drawXXX();
     if (key)
         drawXXX();
-    drawDoor();
-}
-
-void Game::drawDoor() {
-    if (door && (doorRotate<90.0f))
-        doorRotate+=0.01;
 }
 
 void Game::initMap() {

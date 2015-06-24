@@ -39,7 +39,7 @@ void Camera::changeHead() {
 }
 
 void Camera::moveCenter(float p) {
-    center[2-direct]+=p*head;
+    center[2-direct]+=p*head*(1-direct);
 }
 
 void Camera::lookUpDown(float p) {

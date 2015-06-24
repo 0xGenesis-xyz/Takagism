@@ -52,6 +52,16 @@ void Room3::drawWall(GLuint texture) {
     glTexCoord2d(2, 0); glVertex3f(0, 0, 2+0.1);
     glTexCoord2d(2, 3); glVertex3f(0, 3, 2+0.1);
     glTexCoord2d(0, 3); glVertex3f(-2, 3, 2+0.1);
+    
+    glTexCoord2d(0, 0); glVertex3f(-5, 0, 2+0.1);
+    glTexCoord2d(0.5, 0); glVertex3f(-4.5, 0, 2+0.1);
+    glTexCoord2d(0.5, 3); glVertex3f(-4.5, 3, 2+0.1);
+    glTexCoord2d(0, 3); glVertex3f(-5, 3, 2+0.1);
+    
+    glTexCoord2d(0, 0); glVertex3f(-3.5, 0, 2+0.1);
+    glTexCoord2d(0.5, 0); glVertex3f(-3, 0, 2+0.1);
+    glTexCoord2d(0.5, 3); glVertex3f(-3, 3, 2+0.1);
+    glTexCoord2d(0, 3); glVertex3f(-3.5, 3, 2+0.1);
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);

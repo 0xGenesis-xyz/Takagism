@@ -60,6 +60,26 @@ void Room2::drawWall(GLuint texture) {
     glTexCoord2d(6, 0); glVertex3f(-3-0.1, 0, 2);
     glTexCoord2d(6, 3); glVertex3f(-3-0.1, 3, 2);
     glTexCoord2d(0, 3); glVertex3f(-3-0.1, 3, -1-0.1);
+    
+    glTexCoord2d(0, 0); glVertex3f(2-0.1, 0, -1);
+    glTexCoord2d(1, 0); glVertex3f(2-0.1, 0, -2);
+    glTexCoord2d(1, 3); glVertex3f(2-0.1, 3, -2);
+    glTexCoord2d(0, 3); glVertex3f(2-0.1, 3, -1);
+    
+    glTexCoord2d(0, 0); glVertex3f(2-0.1, 0, -3);
+    glTexCoord2d(1, 0); glVertex3f(2-0.1, 0, -4);
+    glTexCoord2d(1, 3); glVertex3f(2-0.1, 3, -4);
+    glTexCoord2d(0, 3); glVertex3f(2-0.1, 3, -3);
+    
+    glTexCoord2d(0, 0); glVertex3f(-5, 0, 2-0.1);
+    glTexCoord2d(0.5, 0); glVertex3f(-4.5, 0, 2-0.1);
+    glTexCoord2d(0.5, 3); glVertex3f(-4.5, 3, 2-0.1);
+    glTexCoord2d(0, 3); glVertex3f(-5, 3, 2-0.1);
+    
+    glTexCoord2d(0, 0); glVertex3f(-3.5, 0, 2-0.1);
+    glTexCoord2d(0.5, 0); glVertex3f(-3, 0, 2-0.1);
+    glTexCoord2d(0.5, 3); glVertex3f(-3, 3, 2-0.1);
+    glTexCoord2d(0, 3); glVertex3f(-3.5, 3, 2-0.1);
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
