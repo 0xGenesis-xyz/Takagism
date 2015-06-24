@@ -11,10 +11,10 @@
 #include "Chamber.h"
 
 void Chamber::init() {
-//    listID=GenList();
     room2.init();
     room3.init();
     room4.init();
+    listID=GenList();
 }
 
 GLint Chamber::GenList() {
@@ -22,6 +22,7 @@ GLint Chamber::GenList() {
     loadTextures();
     
     glNewList(lid, GL_COMPILE);
+    std::cout<<"create"<<std::endl;
     
     room1.drawRoom(textures[2]);
     room2.drawRoom(textures[3]);
@@ -35,10 +36,10 @@ GLint Chamber::GenList() {
 }
 
 void Chamber::drawChamber() {
-    loadTextures();
+//    loadTextures();
     
     glEnable(GL_LIGHTING);
-    GLfloat light_ambient[] = {0.6f, 0.6f, 0.6f, 1.0f};
+    GLfloat light_ambient[] = {0.01f, 0.01f, 0.01f, 1.0f};
     GLfloat light_diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
     GLfloat light_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
     
@@ -48,8 +49,8 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT1, GL_POSITION, light1_pos);
-//    glEnable(GL_LIGHT1);
-    room1.drawRoom(textures[2]);
+    glEnable(GL_LIGHT1);
+//    room1.drawRoom(textures[2]);
     
     GLfloat light2_pos[] = {-5.0f, 2.8f, -4.0f};
     
@@ -57,7 +58,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT2, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT2, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT2, GL_POSITION, light2_pos);
-    glEnable(GL_LIGHT2);
+//    glEnable(GL_LIGHT2);
     room2.drawRoom(textures[3]);
     
     GLfloat light3_pos[] = {-1.2f, 2.8f, 3.8f};
@@ -68,12 +69,12 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT3, GL_POSITION, light3_pos);
 //    glEnable(GL_LIGHT3);
     
-    room3.drawRoom(textures[4]);
-    room4.drawRoom(textures[5]);
-    room5.drawRoom(textures[6]);
+//    room3.drawRoom(textures[4]);
+//    room4.drawRoom(textures[5]);
+//    room5.drawRoom(textures[6]);
     
-    drawCeilingAndFloor();
-//    glCallList(listID);
+//    drawCeilingAndFloor();
+    glCallList(listID);
 }
 
 void Chamber::loadTextures() {
@@ -81,11 +82,11 @@ void Chamber::loadTextures() {
     Texture wallpaper[7];
     wallpaper[0].load("wallpaper1.png", textures[0]);
     wallpaper[1].load("wallpaper2.png", textures[1]);
-    wallpaper[2].load("wallpaper.png", textures[2]);
+    wallpaper[2].load("wallpaper4.png", textures[2]);
     wallpaper[3].load("wallpaper4.png", textures[3]);
-    wallpaper[4].load("wallpaper.png", textures[4]);
-    wallpaper[5].load("wallpaper.png", textures[5]);
-    wallpaper[6].load("wallpaper.png", textures[6]);
+    wallpaper[4].load("wallpaper4.png", textures[4]);
+    wallpaper[5].load("wallpaper4.png", textures[5]);
+    wallpaper[6].load("wallpaper4.png", textures[6]);
 /*
     ceilingpaper.load("wallpaper1.png");
     glBindTexture(GL_TEXTURE_2D, textures[0]);
