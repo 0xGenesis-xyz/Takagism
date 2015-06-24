@@ -39,9 +39,9 @@ void Chamber::drawChamber() {
 //    loadTextures();
     
     glEnable(GL_LIGHTING);
-    GLfloat light_ambient[] = {0.01f, 0.01f, 0.01f, 1.0f};
-    GLfloat light_diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat light_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat light_ambient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat light_diffuse[] = {0.6f, 0.6f, 0.6f, 1.0f};
+    GLfloat light_specular[] = {0.6f, 0.6f, 0.6f, 1.0f};
     
     GLfloat light1_pos[] = {3.5f, 2.8f, -2.5f};
     
@@ -58,8 +58,8 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT2, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT2, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT2, GL_POSITION, light2_pos);
-//    glEnable(GL_LIGHT2);
-    room2.drawRoom(textures[3]);
+    glEnable(GL_LIGHT2);
+//    room2.drawRoom(textures[3]);
     
     GLfloat light3_pos[] = {-1.2f, 2.8f, 3.8f};
     
@@ -67,7 +67,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT3, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT3, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT3, GL_POSITION, light3_pos);
-//    glEnable(GL_LIGHT3);
+    glEnable(GL_LIGHT3);
     
 //    room3.drawRoom(textures[4]);
 //    room4.drawRoom(textures[5]);
@@ -82,11 +82,11 @@ void Chamber::loadTextures() {
     Texture wallpaper[7];
     wallpaper[0].load("wallpaper1.png", textures[0]);
     wallpaper[1].load("wallpaper2.png", textures[1]);
-    wallpaper[2].load("wallpaper4.png", textures[2]);
+    wallpaper[2].load("wallpaper3.png", textures[2]);
     wallpaper[3].load("wallpaper4.png", textures[3]);
-    wallpaper[4].load("wallpaper4.png", textures[4]);
-    wallpaper[5].load("wallpaper4.png", textures[5]);
-    wallpaper[6].load("wallpaper4.png", textures[6]);
+    wallpaper[4].load("wallpaper5.png", textures[4]);
+    wallpaper[5].load("wallpaper6.png", textures[5]);
+    wallpaper[6].load("wallpaper7.png", textures[6]);
 /*
     ceilingpaper.load("wallpaper1.png");
     glBindTexture(GL_TEXTURE_2D, textures[0]);

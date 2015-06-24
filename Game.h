@@ -14,7 +14,15 @@
 
 class Game {
 private:
+    bool collection[5];     //items to collect
+    bool picked;            //item to pick up
+    bool key;
+    bool toPut[3];          //item to put
+    bool door;
+    float doorRotate;
     void initMap();
+    void drawXXX();
+    void drawDoor();
 public:
     int x,y;
     int map[41][51];

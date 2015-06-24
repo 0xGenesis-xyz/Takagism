@@ -16,6 +16,14 @@ void Game::init() {
     x=8;
     y=49;
     chamber.init();
+    for (int i=0; i<5; i++)
+        collection[i]=true;
+    for (int i=0; i<3; i++)
+        toPut[i]=false;
+    picked=true;
+    key=false;
+    door=false;
+    doorRotate=0.0f;
 }
 
 void Game::drawScene() {
@@ -37,6 +45,22 @@ void Game::drawScene() {
         glDisable(GL_LIGHT0);
     
     chamber.drawChamber();
+    for (int i=0; i<5; i++)
+        if (collection[i])
+            drawXXX();
+    for (int i=0; i<3; i++)
+        if (toPut[i])
+            drawXXX();
+    if (picked)
+        drawXXX();
+    if (key)
+        drawXXX();
+    drawDoor();
+}
+
+void Game::drawDoor() {
+    if (door && (doorRotate<90.0f))
+        doorRotate+=0.01;
 }
 
 void Game::initMap() {
@@ -73,4 +97,8 @@ void Game::initMap() {
         map[i][25]=1;
     for (int i=30;i<=40;i++)
         map[i][25]=1;
+}
+
+void Game::drawXXX() {
+    
 }
