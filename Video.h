@@ -18,11 +18,8 @@
 class Video {
 private:
     int frameNum, num;
-//    GLuint videoTex[500];
+    GLuint videoTex[500];
 public:
-    GLuint videoTex;
-    CvCapture *capture;
-    IplImage *frame;
     void init();
     void play();
     void drawNext();

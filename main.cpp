@@ -135,24 +135,8 @@ void init() {
 /// Idle function
 void idle(void)
 {
-    // Capture next frame
-    game.chamber.video.frame = cvQueryFrame(game.chamber.video.capture);
-    if (!game.chamber.video.frame) {
-        cvSetCaptureProperty(game.chamber.video.capture, CV_CAP_PROP_POS_FRAMES, 0);
-        game.chamber.video.frame = cvQueryFrame(game.chamber.video.capture);
-    }
-//    std::cout<<cvGrabFrame(game.video.capture)<<std::endl;
-//    assert(cvRetrieveFrame(game.video.capture));
-
-    // Create Texture
-    glBindTexture(GL_TEXTURE_2D, game.chamber.video.videoTex);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, game.chamber.video.frame->width, game.chamber.video.frame->height, GL_RGB, GL_UNSIGNED_BYTE, game.chamber.video.frame->imageData);
+    game.chamber.video.drawNext();
     
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, game.chamber.video.frame->width, game.chamber.video.frame->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, game.chamber.video.frame->imageData);
-//    game.chamber.video.drawNext();
-    // Update View port
     glutPostRedisplay();
 }
 
