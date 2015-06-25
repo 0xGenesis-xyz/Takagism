@@ -13,7 +13,7 @@
 void Video::init() {
     capture=cvCreateFileCapture("video.avi");
 //    capture=cvCreateCameraCapture(0);
-    std::cout<<"video create"<<std::endl;
+//    std::cout<<"video create"<<std::endl;
     if (!capture)
         std::cout<<"video fail"<<std::endl;
 }
@@ -26,5 +26,5 @@ void Video::play() {
     glTexCoord2f(1.0f, 1.0f); glVertex3f(-4.5f, 2.0f, 3.9f);
     glTexCoord2f(0.0f, 1.0f); glVertex3f(-2.5f, 2.0f, 3.9f);
     glEnd();
-    std::cout<<"video play"<<std::endl;
+    //    std::cout<<"video play"<<std::endl;
 }

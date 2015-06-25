@@ -8,8 +8,8 @@
 
 #include <iostream>
 #include <GLUT/GLUT.h>
-#include <cv.h>
-#include <highgui.h>
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 #include "Game.h"
 
@@ -25,45 +25,27 @@ void keyboard(unsigned char key, int x, int y)
     switch ( key )
     {
         case 'a': {
-            if (game.camera.direct==0)
-                game.camera.changeHead();
-            game.camera.changeDirect();
+            game.turnLeft();
             break;
         }
         case 'd': {
-            if (game.camera.direct==2)
-                game.camera.changeHead();
-            game.camera.changeDirect();
+            game.turnRight();
             break;
         }
         case 'w': {
-            int x=game.x, y=game.y;
-            if (game.camera.direct==2 && game.camera.head==1)
-                x++;
-            if (game.camera.direct==2 && game.camera.head==-1)
-                x--;
-            if (game.camera.direct==0 && game.camera.head==1)
-                y++;
-            if (game.camera.direct==0 && game.camera.head==-1)
-                y--;
-            if (game.map[x][y]==0) {
-                game.camera.moveCamera();
-                game.x=x;
-                game.y=y;
-            }
-            std::cout<<game.x<<","<<game.y<<std::endl;
+            game.moveForward();
             break;
         }
         case 's': {
-            game.camera.changeHead();
+            game.moveBackward();
             break;
         }
         case 'q': {
-            game.camera.moveCenter(-0.1);
+            //game.camera.moveCenter(-0.1);
             break;
         }
         case 'e': {
-            game.camera.moveCenter(0.1);
+            //game.camera.moveCenter(0.1);
             break;
         }
         case 'z': {
@@ -75,11 +57,11 @@ void keyboard(unsigned char key, int x, int y)
             break;
         }
         case 'i': {
-            game.camera.zoomIn();
+            game.zoomIn();
             break;
         }
         case 'o': {
-            game.camera.zoomOut();
+            game.zoomOut();
             break;
         }
         case 'x': {
@@ -106,26 +88,42 @@ void keyboard(unsigned char key, int x, int y)
         default:
             break;
     }
-    
+
     glutPostRedisplay();
+}
+
+void keyboard_up(unsigned char key, int x, int y) {
+    switch (key) {
+    case 'w':
+    case 's':
+        game.stopMove();
+        break;
+    case 'a':
+    case 'd':
+        game.stopTurn();
+        break;
+    }
 }
 
 /// Display the Object
 void display()
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    
-    glMatrixMode(GL_MODELVIEW);
+
+    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    
+    gluPerspective(game.getPerspAngle(), (float)window_width/(float)window_height, 0.01f, 200.0f);
+
+    //glMatrixMode(GL_MODELVIEW);
+
     gluLookAt(game.camera.eye[0], game.camera.eye[1], game.camera.eye[2],
               game.camera.center[0], game.camera.center[1], game.camera.center[2],
               0, 1, 0);
-    
+
     glEnable(GL_DEPTH_TEST);
-    
+
     game.drawScene();
-    
+
     glFlush();
     glutSwapBuffers();
 }
@@ -143,7 +141,7 @@ void idle(void)
 
     // Create Texture
 //    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, game.video.frame->width, game.video.frame->height, GL_RGB, GL_UNSIGNED_BYTE, game.video.frame->imageData);
-    
+
     // Update View port
     glutPostRedisplay();
 }
@@ -154,14 +152,14 @@ void reshape(int w, int h)
     // Update the window's width and height
     window_width  = w;
     window_height = h;
-    
+
     // Reset the viewport
     glViewport(0, 0, window_width, window_height);
-    
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(90.0f, (float)window_width/(float)window_height, 0.01f, 200.0f);
-    
+
     glutPostRedisplay();
 }
 
@@ -174,14 +172,15 @@ int main(int argc, char* argv[])
     glutInitWindowPosition(150, 120);
     window=glutCreateWindow("TAKAGISM");
     init();
-    
+
     // Set the callback function
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);
+    glutKeyboardUpFunc(keyboard_up);
     glutIdleFunc(idle);
-    
+
     glutMainLoop();
-    
+
     return 0;
 }

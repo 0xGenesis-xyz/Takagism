@@ -20,10 +20,31 @@ private:
     bool key;
     bool toPut[3];          //item to put
     void initMap();
+    void move();
+    void turn();
     void drawXXX();
+    float x, y;
+    float direct;    // from 0 to 2 pi
+    float perspAngle;
+    float moveSpeed;
+    float turnSpeed;
+    bool smoothMove;
+    bool smoothTurn;
+    void updateMoveSpeed();
+    void updateTurnSpeed();
+    enum { FORWARD, BACKWARD, STOP_FORWARD, STOP_BACKWARD, STILL } moving;
+    enum { LEFT, RIGHT, STOP_LEFT, STOP_RIGHT, NO_TURNING } turning;
 public:
-    int x,y;
     int map[41][51];
+    float getPerspAngle() { return perspAngle; }
+    void stopMove();
+    void stopTurn();
+    void moveForward();
+    void turnLeft();
+    void turnRight();
+    void moveBackward();
+    void zoomIn();
+    void zoomOut();
     Camera camera;
     Chamber chamber;
     Video video;
