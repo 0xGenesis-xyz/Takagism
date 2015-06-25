@@ -47,7 +47,6 @@ public:
     void zoomOut();
     Camera camera;
     Chamber chamber;
-    Video video;
     void init();
     void drawScene();
     void screenCut(int width, int height);

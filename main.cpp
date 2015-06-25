@@ -135,16 +135,22 @@ void init() {
 /// Idle function
 void idle(void)
 {
-//    cvSetCaptureProperty(game.video.capture, CV_CAP_PROP_POS_FRAMES, 0);
     // Capture next frame
-    game.video.frame = cvQueryFrame(game.video.capture);
+    game.chamber.video.frame = cvQueryFrame(game.chamber.video.capture);
+    if (!game.chamber.video.frame) {
+        cvSetCaptureProperty(game.chamber.video.capture, CV_CAP_PROP_POS_FRAMES, 0);
+        game.chamber.video.frame = cvQueryFrame(game.chamber.video.capture);
+    }
 //    std::cout<<cvGrabFrame(game.video.capture)<<std::endl;
 //    assert(cvRetrieveFrame(game.video.capture));
 
     // Create Texture
-
-//    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, game.video.frame->width, game.video.frame->height, GL_RGB, GL_UNSIGNED_BYTE, game.video.frame->imageData);
-    
+    glBindTexture(GL_TEXTURE_2D, game.chamber.video.videoTex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, game.chamber.video.frame->width, game.chamber.video.frame->height, GL_RGB, GL_UNSIGNED_BYTE, game.chamber.video.frame->imageData);
+ 
+//    game.chamber.video.drawNext();
     // Update View port
     glutPostRedisplay();
 }
@@ -193,7 +199,7 @@ int main(int argc, char* argv[])
 int main( int argc, char** argv ) {
     cvNamedWindow( "Example2", CV_WINDOW_AUTOSIZE );
     //CvCapture* capture = cvCaptureFromAVI( argv[1] ); // either one will work
-    CvCapture* capture = cvCreateFileCapture("tree.avi");
+    CvCapture* capture = cvCreateFileCapture("sand14.avi");
     if (capture==NULL)
         printf("error\n");
     IplImage* frame;

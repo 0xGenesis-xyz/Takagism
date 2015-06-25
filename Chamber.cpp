@@ -16,6 +16,7 @@ void Chamber::init() {
     room2.init();
     room3.init();
     room4.init();
+    video.init();
     listID=GenList();
 }
 
@@ -24,7 +25,6 @@ GLint Chamber::GenList() {
     loadTextures();
     
     glNewList(lid, GL_COMPILE);
-    std::cout<<"create"<<std::endl;
     
     room1.drawRoom(textures[2]);
     room2.drawRoom(textures[3]);
@@ -39,9 +39,7 @@ GLint Chamber::GenList() {
 }
 
 void Chamber::drawChamber() {
-//    loadTextures();
-    
-    glEnable(GL_LIGHTING);
+//    glEnable(GL_LIGHTING);
     GLfloat light_ambient[] = {0.0f, 0.0f, 0.0f, 1.0f};
     GLfloat light_diffuse[] = {0.6f, 0.6f, 0.6f, 1.0f};
     GLfloat light_specular[] = {0.6f, 0.6f, 0.6f, 1.0f};
@@ -52,8 +50,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT1, GL_POSITION, light1_pos);
-    glEnable(GL_LIGHT1);
-//    room1.drawRoom(textures[2]);
+//    glEnable(GL_LIGHT1);
     
     GLfloat light2_pos[] = {-5.0f, 2.8f, -4.0f};
     
@@ -61,8 +58,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT2, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT2, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT2, GL_POSITION, light2_pos);
-    glEnable(GL_LIGHT2);
-//    room2.drawRoom(textures[3]);
+//    glEnable(GL_LIGHT2);
     
     GLfloat light3_pos[] = {-1.2f, 2.8f, 3.8f};
     
@@ -70,7 +66,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT3, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT3, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT3, GL_POSITION, light3_pos);
-    glEnable(GL_LIGHT3);
+//    glEnable(GL_LIGHT3);
     
     GLfloat light4_diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
     GLfloat light4_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -80,7 +76,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT4, GL_DIFFUSE, light4_diffuse);
     glLightfv(GL_LIGHT4, GL_SPECULAR, light4_specular);
     glLightfv(GL_LIGHT4, GL_POSITION, light4_pos);
-    glEnable(GL_LIGHT4);
+//    glEnable(GL_LIGHT4);
     
     GLfloat light5_pos[] = {5.5f, 2.8f, 3.2f};
     
@@ -88,14 +84,10 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT5, GL_DIFFUSE, light4_diffuse);
     glLightfv(GL_LIGHT5, GL_SPECULAR, light4_specular);
     glLightfv(GL_LIGHT5, GL_POSITION, light5_pos);
-    glEnable(GL_LIGHT5);
-    
-//    room3.drawRoom(textures[4]);
-//    room4.drawRoom(textures[5]);
-//    room5.drawRoom(textures[6]);
-    
-//    drawCeilingAndFloor();
+//    glEnable(GL_LIGHT5);
+
     glCallList(listID);
+    video.play();
     drawDoor(textures[8]);
 }
 
@@ -189,24 +181,6 @@ void Chamber::loadTextures() {
     wallpaper[6].load("wallpaper7.png", textures[6]);
     wallpaper[7].load("wallpaper8.png", textures[7]);
     wallpaper[8].load("doorpaper.png", textures[8]);
-/*
-    ceilingpaper.load("wallpaper1.png");
-    glBindTexture(GL_TEXTURE_2D, textures[0]);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ceilingpaper.width, ceilingpaper.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &ceilingpaper.image[0]);
-    
-    floorpaper.load("wallpaper2.png");
-    glBindTexture(GL_TEXTURE_2D, textures[1]);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, floorpaper.width, floorpaper.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &floorpaper.image[0]);
-/*
-    wallpaper.load("wallpaper4.png");
-//    glBindTexture(GL_TEXTURE_2D, textures[3]);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, wallpaper.width, wallpaper.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &wallpaper.image[0]);*/
 }
 
 void Chamber::drawCeilingAndFloor() {

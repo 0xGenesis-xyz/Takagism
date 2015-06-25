@@ -10,6 +10,7 @@
 #define Takagism_Chamber_h
 
 #include <GLUT/GLUT.h>
+#include "Video.h"
 #include "Texture.h"
 #include "Room1.h"
 #include "Room2.h"
@@ -35,6 +36,7 @@ private:
     void drawgap(GLuint texture);
     void drawDoor(GLuint texture);
 public:
+    Video video;
     bool door;
     void init();
     void drawChamber();
