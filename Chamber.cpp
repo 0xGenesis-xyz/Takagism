@@ -39,7 +39,7 @@ GLint Chamber::GenList() {
 }
 
 void Chamber::drawChamber() {
-//    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHTING);
     GLfloat light_ambient[] = {0.0f, 0.0f, 0.0f, 1.0f};
     GLfloat light_diffuse[] = {0.6f, 0.6f, 0.6f, 1.0f};
     GLfloat light_specular[] = {0.6f, 0.6f, 0.6f, 1.0f};
@@ -50,7 +50,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT1, GL_POSITION, light1_pos);
-//    glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHT1);
     
     GLfloat light2_pos[] = {-5.0f, 2.8f, -4.0f};
     
@@ -58,7 +58,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT2, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT2, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT2, GL_POSITION, light2_pos);
-//    glEnable(GL_LIGHT2);
+    glEnable(GL_LIGHT2);
     
     GLfloat light3_pos[] = {-1.2f, 2.8f, 3.8f};
     
@@ -66,7 +66,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT3, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT3, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT3, GL_POSITION, light3_pos);
-//    glEnable(GL_LIGHT3);
+    glEnable(GL_LIGHT3);
     
     GLfloat light4_diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
     GLfloat light4_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -76,7 +76,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT4, GL_DIFFUSE, light4_diffuse);
     glLightfv(GL_LIGHT4, GL_SPECULAR, light4_specular);
     glLightfv(GL_LIGHT4, GL_POSITION, light4_pos);
-//    glEnable(GL_LIGHT4);
+    glEnable(GL_LIGHT4);
     
     GLfloat light5_pos[] = {5.5f, 2.8f, 3.2f};
     
@@ -84,7 +84,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT5, GL_DIFFUSE, light4_diffuse);
     glLightfv(GL_LIGHT5, GL_SPECULAR, light4_specular);
     glLightfv(GL_LIGHT5, GL_POSITION, light5_pos);
-//    glEnable(GL_LIGHT5);
+    glEnable(GL_LIGHT5);
 
     glCallList(listID);
     video.play();

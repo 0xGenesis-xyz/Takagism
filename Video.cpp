@@ -40,8 +40,8 @@ void Video::play() {
     glBindTexture(GL_TEXTURE_2D, videoTex);
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 1.0f); glVertex3f(-3.0f, 1.0f, 3.9f);
-    glTexCoord2f(0.3f, 1.0f); glVertex3f(-4.5f, 1.0f, 3.9f);
-    glTexCoord2f(0.3f, 0.0f); glVertex3f(-4.5f, 2.0f, 3.9f);
+    glTexCoord2f(0.8f, 1.0f); glVertex3f(-4.5f, 1.0f, 3.9f);
+    glTexCoord2f(0.8f, 0.0f); glVertex3f(-4.5f, 2.0f, 3.9f);
     glTexCoord2f(0.0f, 0.0f); glVertex3f(-3.0f, 2.0f, 3.9f);
     glEnd();
     glDisable(GL_TEXTURE_2D);
