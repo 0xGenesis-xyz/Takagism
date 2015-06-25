@@ -29,6 +29,7 @@ public:
     Video video;
     void init();
     void drawScene();
+    void screenCut(int width, int height);
 };
 
 #endif

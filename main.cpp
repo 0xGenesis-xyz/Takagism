@@ -96,6 +96,9 @@ void keyboard(unsigned char key, int x, int y)
                 game.camera.intensity-=0.1;
             break;
         }
+        case 'v': {
+            game.screenCut(window_width, window_height);
+        }
         case 't': {
             game.chamber.door=!game.chamber.door;
         }
@@ -139,7 +142,7 @@ void idle(void)
     game.video.frame = cvQueryFrame(game.video.capture);
 
     // Create Texture
-    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, game.video.frame->width, game.video.frame->height, GL_RGB, GL_UNSIGNED_BYTE, game.video.frame->imageData);
+//    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, game.video.frame->width, game.video.frame->height, GL_RGB, GL_UNSIGNED_BYTE, game.video.frame->imageData);
     
     // Update View port
     glutPostRedisplay();

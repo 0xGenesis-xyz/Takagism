@@ -57,6 +57,34 @@ void Game::drawScene() {
     video.play();
 }
 
+void Game::screenCut(int width, int height) {
+    //获取应用程序颜色缓冲区数组
+    GLubyte* frameData=(GLubyte*)malloc(width*height*3);
+    glReadPixels(0,0,width,height,GL_RGB,GL_UNSIGNED_BYTE,frameData);
+    
+    //创建IplImage结构 并指定结构头为适当格式
+    IplImage* SnapImage=cvCreateImageHeader(cvSize(width,height),IPL_DEPTH_8U,3);
+    //将刚创建的IplImage结构的DATA数据指针指向之前获取到的缓冲区数组
+    cvSetData( SnapImage, frameData,width*3);
+    
+    //由于opencv里颜色data存放的特点 这里要进行下上下翻转
+    cvFlip( SnapImage, SnapImage, 0 );//上下翻转
+    //这里要进行下RGB-BGR的转换...
+    cvCvtColor( SnapImage, SnapImage,CV_RGB2BGR); //转格式
+    
+    //保存图片
+    time_t t = time(0);
+    char strTime[64];
+//    ZeroMemory(strTime,sizeof(strTime));
+    strftime(strTime , 64, "%Y%m%d%H%M%S",localtime(&t) );
+    strcat(strTime,".jpg");//保存为年月日时分秒.jpg
+    cvSaveImage(strTime,SnapImage);
+    
+    //释放内存
+    cvReleaseImage(&SnapImage);
+    free(frameData);
+}
+
 void Game::initMap() {
     for (int i=0;i<=40;i++)
         for (int j=0;j<=50;j++)
