@@ -13,6 +13,7 @@
 
 #include "Game.h"
 
+GLint window;
 int window_width  = 1000;
 int window_height = 750;
 
@@ -122,6 +123,7 @@ void display()
     
     game.drawScene();
     
+    glFlush();
     glutSwapBuffers();
 }
 
@@ -132,6 +134,14 @@ void init() {
 /// Idle function
 void idle(void)
 {
+//    cvSetCaptureProperty(game.video.capture, CV_CAP_PROP_POS_FRAMES, 0);
+    // Capture next frame
+    game.video.frame = cvQueryFrame(game.video.capture);
+
+    // Create Texture
+    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, game.video.frame->width, game.video.frame->height, GL_RGB, GL_UNSIGNED_BYTE, game.video.frame->imageData);
+    
+    // Update View port
     glutPostRedisplay();
 }
 
@@ -159,7 +169,7 @@ int main(int argc, char* argv[])
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL);
     glutInitWindowSize(window_width, window_height);
     glutInitWindowPosition(150, 120);
-    glutCreateWindow("TAKAGISM");
+    window=glutCreateWindow("TAKAGISM");
     init();
     
     // Set the callback function

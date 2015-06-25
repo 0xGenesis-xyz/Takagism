@@ -11,6 +11,7 @@
 
 #include "Camera.h"
 #include "Chamber.h"
+#include "Video.h"
 
 class Game {
 private:
@@ -25,6 +26,7 @@ public:
     int map[41][51];
     Camera camera;
     Chamber chamber;
+    Video video;
     void init();
     void drawScene();
 };

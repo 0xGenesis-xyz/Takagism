@@ -22,6 +22,7 @@ void Game::init() {
         toPut[i]=false;
     picked=true;
     key=false;
+    video.init();
 }
 
 void Game::drawScene() {
@@ -53,6 +54,7 @@ void Game::drawScene() {
         drawXXX();
     if (key)
         drawXXX();
+    video.play();
 }
 
 void Game::initMap() {
