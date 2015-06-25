@@ -8,8 +8,8 @@
 
 #include <iostream>
 #include <GLUT/GLUT.h>
-#include <opencv2/opencv.hpp>
-#include <opencv2/highgui/highgui.hpp>
+//#include <opencv2/opencv.hpp>
+//#include <opencv2/highgui/highgui.hpp>
 
 #include "Game.h"
 
@@ -138,10 +138,13 @@ void idle(void)
 //    cvSetCaptureProperty(game.video.capture, CV_CAP_PROP_POS_FRAMES, 0);
     // Capture next frame
     game.video.frame = cvQueryFrame(game.video.capture);
+//    std::cout<<cvGrabFrame(game.video.capture)<<std::endl;
+//    assert(cvRetrieveFrame(game.video.capture));
 
     // Create Texture
-//    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, game.video.frame->width, game.video.frame->height, GL_RGB, GL_UNSIGNED_BYTE, game.video.frame->imageData);
 
+//    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, game.video.frame->width, game.video.frame->height, GL_RGB, GL_UNSIGNED_BYTE, game.video.frame->imageData);
+    
     // Update View port
     glutPostRedisplay();
 }
@@ -184,3 +187,24 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+/*
+#include <highgui.h>
+
+int main( int argc, char** argv ) {
+    cvNamedWindow( "Example2", CV_WINDOW_AUTOSIZE );
+    //CvCapture* capture = cvCaptureFromAVI( argv[1] ); // either one will work
+    CvCapture* capture = cvCreateFileCapture("tree.avi");
+    if (capture==NULL)
+        printf("error\n");
+    IplImage* frame;
+    while(1) {
+        frame = cvQueryFrame( capture );
+//        if( !frame ) break;
+        cvShowImage( "Example2", frame );
+        char c = cvWaitKey(33);
+        if( c == 27 ) break;
+    }
+    cvReleaseCapture( &capture );
+    cvDestroyWindow( "Example2" );
+}
+*/

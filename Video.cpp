@@ -11,11 +11,17 @@
 #include "Video.h"
 
 void Video::init() {
-    capture=cvCreateFileCapture("video.avi");
+    capture=cvCreateFileCapture("sandtext.avi");
 //    capture=cvCreateCameraCapture(0);
 //    std::cout<<"video create"<<std::endl;
     if (!capture)
         std::cout<<"video fail"<<std::endl;
+    frame = cvQueryFrame(capture);
+    int frameH = (int) cvGetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT);
+    int frameW = (int) cvGetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH);
+    int fps = (int) cvGetCaptureProperty(capture, CV_CAP_PROP_FPS);
+    int numFrames = (int) cvGetCaptureProperty(capture, CV_CAP_PROP_FRAME_COUNT);
+    printf("\tvideo height : %d\n\tvideo width : %d\n\tfps : %d\n\tframe numbers : %d\n", frameH, frameW, fps, numFrames);
 }
 
 void Video::play() {
