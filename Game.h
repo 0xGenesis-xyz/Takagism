@@ -12,9 +12,11 @@
 #include "Camera.h"
 #include "Chamber.h"
 #include "Video.h"
+#include "Object.h"
 
 class Game {
 private:
+    Object bunny1;
     bool collection[5];     //items to collect
     bool picked;            //item to pick up
     bool key;
@@ -24,6 +26,7 @@ private:
     void turn();
     void drawXXX();
     float x, y;
+    const float z;
     float direct;    // from 0 to 2 pi
     float perspAngle;
     float moveSpeed;
@@ -32,11 +35,19 @@ private:
     bool smoothTurn;
     void updateMoveSpeed();
     void updateTurnSpeed();
+    void updateZoomToFit();
     enum { FORWARD, BACKWARD, STOP_FORWARD, STOP_BACKWARD, STILL } moving;
     enum { LEFT, RIGHT, STOP_LEFT, STOP_RIGHT, NO_TURNING } turning;
+    enum { OPERATING, RESTORING, ZOOM_TO_FIT, NO_ZOOM_TO_FIT } zooming;
 public:
+    Game() : z(1.6f) {}
     int map[41][51];
+    Camera camera;
+    Chamber chamber;
     float getPerspAngle() { return perspAngle; }
+    void init();
+    void drawScene();
+    void screenCut(int width, int height);
     void stopMove();
     void stopTurn();
     void moveForward();
@@ -45,11 +56,7 @@ public:
     void moveBackward();
     void zoomIn();
     void zoomOut();
-    Camera camera;
-    Chamber chamber;
-    void init();
-    void drawScene();
-    void screenCut(int width, int height);
+    void zoomToFit();
 };
 
 #endif

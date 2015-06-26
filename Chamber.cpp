@@ -16,7 +16,7 @@ void Chamber::init() {
     room2.init();
     room3.init();
     room4.init();
-    video.init();
+    //video.init();
     listID=GenList();
 }
 

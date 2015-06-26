@@ -10,10 +10,10 @@
 #define __Takagism__Video__
 
 #include <stdio.h>
-#include <cv.h>
-#include <highgui.h>
-//#include <opencv2/opencv.hpp>
-//#include <opencv2/highgui/highgui.hpp>
+//#include <cv.h>
+//#include <highgui.h>
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 class Video {
 private:

@@ -48,6 +48,10 @@ void keyboard(unsigned char key, int x, int y)
             //game.camera.moveCenter(0.1);
             break;
         }
+        case 'f': {
+            game.zoomToFit();
+            break;
+        }
         case 'z': {
             game.camera.lookUpDown(-0.1);
             break;
@@ -135,7 +139,7 @@ void init() {
 /// Idle function
 void idle(void)
 {
-    game.chamber.video.drawNext();
+    //game.chamber.video.drawNext();
     
     glutPostRedisplay();
 }

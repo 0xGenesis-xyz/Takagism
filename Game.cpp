@@ -10,15 +10,19 @@
 #include <stdio.h>
 #include <GLUT/GLUT.h>
 #include "Game.h"
+#include "Object.h"
 
 static const float STEP = 0.4f;
 static const float ANGLE = M_PI / 60;
 static const float TIME_RANGE = 2.0f;
 static const float DTIME = 0.4f;
+static const int ZOOM_TO_FIT_FRAMES = 20;
 
 void Game::init() {
     initMap();
     camera.init();
+    //bunny1 = Object(-4.6f, 0.4f, -3.6f, -3.6f, 0.4f, -2.6f, 0.6f);
+    bunny1 = Object(4.0f, 3.0f, 0.4f, M_PI * 1.25, 2.0f);
     x = 8.0f;
     y = 49.0f;
     perspAngle = 90.0f;
@@ -26,6 +30,7 @@ void Game::init() {
     turnSpeed = 0.0f;
     moving = STILL;
     turning = NO_TURNING;
+    zooming = NO_ZOOM_TO_FIT;
     smoothMove = false;
     smoothTurn = false;
     direct = M_PI * 1.5;
@@ -40,11 +45,13 @@ void Game::init() {
 }
 
 void Game::moveForward() {
-    moving = FORWARD;
+    if (zooming == NO_ZOOM_TO_FIT)
+        moving = FORWARD;
 }
 
 void Game::moveBackward() {
-    moving = BACKWARD;
+    if (zooming == NO_ZOOM_TO_FIT)
+        moving = BACKWARD;
 }
 
 void Game::stopMove() {
@@ -118,11 +125,13 @@ void Game::move() {
 }
 
 void Game::turnLeft() {
-    turning = LEFT;
+    if (zooming == NO_ZOOM_TO_FIT)
+        turning = LEFT;
 }
 
 void Game::turnRight() {
-    turning = RIGHT;
+    if (zooming == NO_ZOOM_TO_FIT)
+        turning = RIGHT;
 }
 
 void Game::updateTurnSpeed() {
@@ -170,6 +179,76 @@ void Game::zoomIn() {
 void Game::zoomOut() {
     if (perspAngle <= 120)
         perspAngle += 2;
+}
+
+void Game::zoomToFit() {
+    switch (zooming) {
+    case NO_ZOOM_TO_FIT:
+        zooming = OPERATING;
+        break;
+    case ZOOM_TO_FIT:
+        zooming = RESTORING;
+        break;
+    case OPERATING:
+    case RESTORING:
+        break;    // zoomToFit state cannot be changed
+    }
+}
+
+void Game::updateZoomToFit() {
+    static float dx, dy, dz, dd;
+    static float nx, ny, nz, nd;
+    static int count;
+    static bool calc = false;
+    if (!calc) {
+        float targetX = bunny1.x - bunny1.size * cos(bunny1.direct);
+        float targetY = bunny1.y - bunny1.size * sin(bunny1.direct);
+        float targetZ = bunny1.z;
+        float targetD = bunny1.direct;
+        if (zooming == OPERATING) {
+            nx = x;
+            ny = y;
+            nz = z;
+            nd = direct;
+            dx = (targetX - x) / ZOOM_TO_FIT_FRAMES;
+            dy = (targetY - y) / ZOOM_TO_FIT_FRAMES;
+            dz = (targetZ - z) / ZOOM_TO_FIT_FRAMES;
+            dd = (targetD - direct);
+        }
+        else if (zooming == RESTORING) {
+            nx = targetX;
+            ny = targetY;
+            nz = targetZ;
+            nd = targetD;
+            dx = (x - targetX) / ZOOM_TO_FIT_FRAMES;
+            dy = (y - targetY) / ZOOM_TO_FIT_FRAMES;
+            dz = (z - targetZ) / ZOOM_TO_FIT_FRAMES;
+            dd = (direct - targetD);
+        }
+        if (dd >= M_PI) dd -= 2 * M_PI;
+        if (dd <= -M_PI) dd += 2 * M_PI;
+        dd /= ZOOM_TO_FIT_FRAMES;
+        count = 0;
+        calc = true;
+    }
+    else {
+        if (count < ZOOM_TO_FIT_FRAMES) {
+            nx += dx;
+            ny += dy;
+            nz += dz;
+            nd += dd;
+            count++;
+            camera.resetCamera(nx, ny, nd, nz);
+        }
+        else {
+            if (zooming == OPERATING)
+                zooming = ZOOM_TO_FIT;
+            else if (zooming == RESTORING)
+                zooming = NO_ZOOM_TO_FIT;
+            count = 0;
+            calc = false;
+        }
+    }
 }
 
 void Game::drawScene() {
@@ -235,6 +314,15 @@ void Game::drawScene() {
         turn();
         break;
     case NO_TURNING:
+        break;
+    default:
+        break;
+    }
+
+    switch (zooming) {
+    case OPERATING:
+    case RESTORING:
+        updateZoomToFit();
         break;
     default:
         break;
