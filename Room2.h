@@ -11,13 +11,10 @@
 
 #include <stdio.h>
 #include "Item.h"
-#include "Texture.h"
 
 class Room2 {
 private:
     Item whiteRabbit;
-    Texture wallpaper;
-    void loadTextures();
     void drawWall(GLuint texture);
 public:
     Room2();

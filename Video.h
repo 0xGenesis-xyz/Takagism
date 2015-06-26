@@ -10,15 +10,19 @@
 #define __Takagism__Video__
 
 #include <stdio.h>
-#include <opencv2/opencv.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include <cv.h>
+#include <highgui.h>
+//#include <opencv2/opencv.hpp>
+//#include <opencv2/highgui/highgui.hpp>
 
 class Video {
+private:
+    int frameNum, num;
+    GLuint videoTex[500];
 public:
-    CvCapture *capture;
-    IplImage *frame;
     void init();
     void play();
+    void drawNext();
 };
 
 #endif /* defined(__Takagism__Video__) */
