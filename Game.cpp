@@ -13,8 +13,8 @@
 
 static const float STEP = 0.4f;
 static const float ANGLE = M_PI / 60;
-static const float ddirect = M_PI / 75;
-static const float dspeed = 0.1f;
+static const float TIME_RANGE = 2.0f;
+static const float DTIME = 0.4f;
 
 void Game::init() {
     initMap();
@@ -77,27 +77,28 @@ void Game::stopTurn() {
 }
 
 void Game::updateMoveSpeed() {
-    static float time = -5.0f;
+    static float time = -TIME_RANGE;
     switch (moving) {
     case FORWARD:
     case BACKWARD:
-        if (time < 5.0f)
-            time += 0.05f;
+        if (time < TIME_RANGE)
+            time += DTIME;
         else
             smoothMove = true;
         break;
     case STOP_FORWARD:
     case STOP_BACKWARD:
-        if (time > -5.0f)
-            time -= 0.05f;
+        if (time > -TIME_RANGE)
+            time -= DTIME;
         else {
             moving = STILL;
-            time = -5.0f;
+            time = -TIME_RANGE;
         }
+        break;
     case STILL:
-        time = -5.0f;
+        time = -TIME_RANGE;
     }
-    moveSpeed = STEP / (pow(M_E, time) + 1);    // STEP * 1 / (e ^ time + 1)
+    moveSpeed = STEP / (pow(M_E, -time) + 1);    // STEP * 1 / (e ^ time + 1)
 }
 
 void Game::move() {
@@ -119,46 +120,35 @@ void Game::move() {
 
 void Game::turnLeft() {
     turning = LEFT;
-    /*
-    direct += ddirect;
-    if (direct >= 2 * M_PI)
-        direct = 0.0f;
-    camera.resetCamera(x, y, direct);
-    */
 }
 
 void Game::turnRight() {
     turning = RIGHT;
-    /*
-    direct -= ddirect;
-    if (direct < 0)
-        direct = 2 * M_PI;
-    camera.resetCamera(x, y, direct);
-    */
 }
 
 void Game::updateTurnSpeed() {
-    static float time = -5.0f;
+    static float time = -TIME_RANGE;
     switch (turning) {
     case LEFT:
     case RIGHT:
-        if (time < 5.0f)
-            time += 0.05f;
+        if (time < TIME_RANGE)
+            time += DTIME;
         else
             smoothTurn = true;
         break;
     case STOP_LEFT:
     case STOP_RIGHT:
-        if (time > -5.0f)
-            time -= 0.05f;
+        if (time > -TIME_RANGE)
+            time -= DTIME;
         else {
             turning = NO_TURNING;
-            time = -5.0f;
+            time = -TIME_RANGE;
         }
+        break;
     case NO_TURNING:
-        time = -5.0f;
+        time = -TIME_RANGE;
     }
-    turnSpeed = ANGLE / (pow(M_E, time) + 1);    // ANGLE * 1 / (e ^ time + 1)
+    turnSpeed = ANGLE / (pow(M_E, -time) + 1);    // ANGLE * 1 / (e ^ time + 1)
 }
 
 void Game::turn() {
@@ -176,13 +166,11 @@ void Game::turn() {
 void Game::zoomIn() {
     if (perspAngle >= 45)
         perspAngle -= 2;
-    std::cout << perspAngle << std::endl;
 }
 
 void Game::zoomOut() {
     if (perspAngle <= 120)
         perspAngle += 2;
-    std::cout << perspAngle << std::endl;
 }
 
 void Game::drawScene() {
