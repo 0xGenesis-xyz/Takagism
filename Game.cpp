@@ -195,16 +195,16 @@ void Game::zoomToFit() {
     }
 }
 
-void Game::updateZoomToFit() {
+void Game::updateZoomToFit(Object& obj) {
     static float dx, dy, dz, dd;
     static float nx, ny, nz, nd;
     static int count;
     static bool calc = false;
     if (!calc) {
-        float targetX = bunny1.x - bunny1.size * cos(bunny1.direct);
-        float targetY = bunny1.y - bunny1.size * sin(bunny1.direct);
-        float targetZ = bunny1.z;
-        float targetD = bunny1.direct;
+        float targetX = obj.x - obj.size * cos(obj.direct);
+        float targetY = obj.y - obj.size * sin(obj.direct);
+        float targetZ = obj.z;
+        float targetD = obj.direct;
         if (zooming == OPERATING) {
             nx = x;
             ny = y;
@@ -322,7 +322,7 @@ void Game::drawScene() {
     switch (zooming) {
     case OPERATING:
     case RESTORING:
-        updateZoomToFit();
+        updateZoomToFit(bunny1);
         break;
     default:
         break;

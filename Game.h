@@ -35,7 +35,7 @@ private:
     bool smoothTurn;
     void updateMoveSpeed();
     void updateTurnSpeed();
-    void updateZoomToFit();
+    void updateZoomToFit(Object&);
     enum { FORWARD, BACKWARD, STOP_FORWARD, STOP_BACKWARD, STILL } moving;
     enum { LEFT, RIGHT, STOP_LEFT, STOP_RIGHT, NO_TURNING } turning;
     enum { OPERATING, RESTORING, ZOOM_TO_FIT, NO_ZOOM_TO_FIT } zooming;
