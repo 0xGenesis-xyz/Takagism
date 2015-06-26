@@ -19,7 +19,7 @@ void Camera::init() {
     center[1] = eye[1]=1.6;
     eye[2]=-2.4;
     torch=false;
-    intensity=0.6;
+    intensity=1.0;
 }
 
 void Camera::resetCamera(float x, float y, float direct, float z) {

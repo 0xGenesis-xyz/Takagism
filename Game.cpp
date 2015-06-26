@@ -256,13 +256,26 @@ void Game::drawScene() {
     GLfloat light_ambient[] = {camera.intensity*0.1f, camera.intensity*0.1f, camera.intensity*0.1f, 1.0f};
     GLfloat light_diffuse[] = {camera.intensity, camera.intensity, camera.intensity, 1.0f};
     GLfloat light_specular[] = {camera.intensity, camera.intensity, camera.intensity, 1.0f};
-    GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2]};
+    //GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2]};
+    static float angle = 0;
+    angle += M_PI / 180;
+    if (angle >= 2 * M_PI)
+        angle = 0;
+    GLfloat light_direction[] = {static_cast<GLfloat>(sin(angle)), 0, static_cast<GLfloat>(cos(angle))};
+    //std::cout << camera.center[0] - camera.eye[0] << " " << camera.center[1] - camera.eye[1] << " " << camera.center[2] - camera.eye[2] << std::endl;
+    //GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[2]-camera.eye[2], camera.center[1]-camera.eye[1]};
+    //GLfloat light_direction[] = {camera.center[1]-camera.eye[1], camera.center[0]-camera.eye[0], camera.center[2]-camera.eye[2]};
+    //GLfloat light_direction[] = {camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2], camera.center[0]-camera.eye[0]};
+    //GLfloat light_direction[] = {camera.center[2]-camera.eye[2], camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1]};
+    //GLfloat light_direction[] = {camera.center[2]-camera.eye[2], camera.center[1]-camera.eye[1], camera.center[0]-camera.eye[0]};
 
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT0, GL_POSITION, camera.eye);
+    //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, camera.center);// light_direction);
     glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light_direction);
+    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 127.0);
     glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
     if (camera.torch)
         glEnable(GL_LIGHT0);
