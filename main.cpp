@@ -68,6 +68,14 @@ void keyboard(unsigned char key, int x, int y)
             game.zoomOut();
             break;
         }
+        case 'p': {
+            game.pickup();
+            break;
+        }
+        case 'u': {
+            game.put();
+            break;
+        }
         case 'x': {
             game.camera.torch=!game.camera.torch;
             break;
@@ -84,9 +92,6 @@ void keyboard(unsigned char key, int x, int y)
         }
         case 'v': {
             game.screenCut(window_width, window_height);
-        }
-        case 't': {
-            game.chamber.door=!game.chamber.door;
         }
 
         default:

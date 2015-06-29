@@ -11,6 +11,8 @@
 #include "Chamber.h"
 
 void Chamber::init() {
+    translate=-3.6f;
+    scale=0.36f;
     door=false;
     doorRotate=0.0f;
     room2.init();
@@ -89,7 +91,24 @@ void Chamber::drawChamber() {
 
     glCallList(listID);
 //    video.play();
+    drawSphere();
     drawDoor(textures[8]);
+}
+
+void Chamber::drawSphere() {
+    translate+=0.1f;
+    if (translate>-1.4f)
+        translate=-3.6f;
+    scale+=0.02f;
+    if (scale>0.8f)
+        scale=0.36f;
+    glPushMatrix();
+    glTranslatef(-4.6, 2.6, translate);
+//    glTranslatef(-4.6, 2.6, -3.6);
+    glScalef(scale, scale, scale);
+    glutSolidSphere(0.4, 50, 50);
+    glPopMatrix();
+    std::cout<<translate<<" "<<scale<<std::endl;
 }
 
 void Chamber::drawDoor(GLuint doorTex) {

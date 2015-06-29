@@ -12,6 +12,8 @@
 #include "Game.h"
 #include "Object.h"
 
+#define RANGE 0.8
+
 static const float STEP = 0.4f;
 static const float ANGLE = M_PI / 60;
 static const float TIME_RANGE = 2.0f;
@@ -36,9 +38,8 @@ void Game::init() {
     direct = M_PI * 1.5;
     camera.resetCamera(x, y, direct);
     chamber.init();
-    for (int i=0; i<3; i++)
-        toPut[i]=false;
     initItems();
+    toPut=false;
 }
 
 void Game::initItems() {
@@ -69,19 +70,19 @@ void Game::initBlackRabbit() {
 
 void Game::initCrystal() {
     char fileName[128]="Crystal.obj";
-    float center[]={-1.0f, 0.3f, -3.0f};
+    float center[]={-2.3f, 0.1f, -0.6f};
     collection[2].init(fileName, center, 0.1f, true);
 }
 
 void Game::initBook() {
     char fileName[128]="book.obj";
-    float center[]={-2.0f, 0.3f, -3.0f};
-    collection[3].init(fileName, center, 0.1f, true);
+    float center[]={-0.7f, 0.9f, 3.5f};
+    collection[3].init(fileName, center, 0.1f, false);
 }
 
 void Game::initVase() {
     char fileName[128]="vase.obj";
-    float center[]={-3.0f, 0.3f, -3.0f};
+    float center[]={3.0f, 0.8f, 3.5f};
     collection[4].init(fileName, center, 0.004f, true);
 }
 
@@ -292,6 +293,35 @@ void Game::updateZoomToFit(Object& obj) {
     }
 }
 
+void Game::pickup() {
+    for (int i=0; i<4; i++)
+        if (distance(collection[i].modelCenter)<RANGE && collection[i].display) {
+            collection[i].display=false;
+            std::cout<<"pick up "<<i<<std::endl;
+        }
+    if (distance(collection[4].modelCenter)<RANGE && collection[4].display && toPut && !collection[3].display) {
+        collection[4].display=false;
+        std::cout<<"pick up 4"<<std::endl;
+        chamber.door=!chamber.door;
+    }
+}
+
+void Game::put() {
+    if (!toPut) {
+        bool flag=false;
+        for (int i=0; i<3; i++)
+            flag=flag || collection[i].display;
+        if (!flag) {
+            toPut=true;
+            collection[3].display=true;
+        }
+    }
+}
+
+float Game::distance(float position[]) {
+    return sqrtf(pow(camera.eye[0]-position[0], 2)+pow(camera.eye[2]-position[2], 2));
+}
+
 void Game::drawScene() {
     glEnable(GL_LIGHTING);
     GLfloat light_ambient[] = {camera.intensity*0.1f, camera.intensity*0.1f, camera.intensity*0.1f, 1.0f};
@@ -373,9 +403,8 @@ void Game::drawScene() {
     for (int i=0; i<5; i++)
         if (collection[i].display)
             collection[i].drawItem();
-    for (int i=0; i<3; i++)
-        if (toPut[i])
-            drawXXX();
+    if (toPut)
+        drawXXX();
 }
 
 void Game::screenCut(int width, int height) {
@@ -440,8 +469,15 @@ void Game::initMap() {
         map[i][25]=1;
     for (int i=30;i<=40;i++)
         map[i][25]=1;
+    for (int i=19;i<=21;i++)
+        for (int j=13;j<=22;j++)
+            map[i][j]=1;
 }
 
 void Game::drawXXX() {
-    
+    glPushMatrix();
+    collection[0].drawItem(2.8f, 1.1f, -0.5f);
+    collection[2].drawItem(3.2f, 1.0f, -0.4f);
+    collection[1].drawItem(3.6f, 1.1f, -0.3f);
+    glPopMatrix();
 }

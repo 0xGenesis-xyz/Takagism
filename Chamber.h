@@ -28,8 +28,10 @@ private:
     Room5 room5;
     
     float doorRotate;
-//    Texture ceilingpaper;
-//    Texture floorpaper;
+    float translate;
+    float scale;
+    void drawSphere();
+
     GLuint textures[9];
     void loadTextures();
     void drawCeilingAndFloor();

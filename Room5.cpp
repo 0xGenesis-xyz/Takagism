@@ -16,24 +16,20 @@ void Room5::init() {
 
 void Room5::initTable() {
     char fileName[128]="Table de nuit_Final.obj";
-    float center[]={3.0f, 0.1f, 3.4f};
+    float center[]={3.6f, 0.1f, 3.9f};
     table.init(fileName, center, 0.02f, true);
 }
 
 void Room5::initTableT() {
     char fileName[128]="Granit kitchen table.obj";
-    float center[]={2.5f, 0.3f, 0.0f};
+    float center[]={2.5f, 0.2f, -0.7f};
     tableT.init(fileName, center, 0.01f, true);
 }
 
 void Room5::drawRoom(GLuint texture) {
     drawWall(texture);
-    
-    glPushMatrix();
-    glRotatef(180, 0, 1, 0);
-    table.drawItem();
-    glPopMatrix();
-    
+
+    table.drawItem(180.0f);
     tableT.drawItem();
 }
 

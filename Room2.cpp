@@ -17,14 +17,6 @@ void Room2::init() {
     initTable();
 }
 
-void Room2::initWhiteRabbit() {
-    char fileName[128]="bunny.obj";
-    float center[]={-4.6f, 0.4f, -3.6f};
-    GLfloat material_ambient[]={0.8f, 0.8f, 0.8f, 1.0f};
-    GLfloat material_diffuse[]={0.9f, 0.9f, 0.9f, 1.0f};
-    GLfloat material_specular[]={0.0f, 0.0f, 0.0f, 1.0f};
-}
-
 void Room2::initTable() {
     char fileName[128]="Table de nuit_Final.obj";
     float center[]={-4.9f, 0.1f, -3.9f};

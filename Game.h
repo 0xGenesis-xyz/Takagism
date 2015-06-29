@@ -19,14 +19,14 @@ class Game {
 private:
     Object bunny1;
     Item collection[5];     //items to collect
-    bool toPut[3];          //item to put
+    bool toPut;             //item to put
     void initMap();
     void move();
     void turn();
     void drawXXX();
     float x, y;
     const float z;
-    float direct;    // from 0 to 2 pi
+    float direct;           // from 0 to 2 pi
     float perspAngle;
     float moveSpeed;
     float turnSpeed;
@@ -40,6 +40,7 @@ private:
     void initBook();
     void initVase();
     
+    float distance(float position[]);
     void updateMoveSpeed();
     void updateTurnSpeed();
     void updateZoomToFit(Object&);
@@ -64,6 +65,8 @@ public:
     void zoomIn();
     void zoomOut();
     void zoomToFit();
+    void pickup();
+    void put();
 };
 
 #endif

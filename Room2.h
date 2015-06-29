@@ -16,7 +16,6 @@ class Room2 {
 private:
     Item table;
     void drawWall(GLuint texture);
-    void initWhiteRabbit();
     void initTable();
 public:
     Room2();
