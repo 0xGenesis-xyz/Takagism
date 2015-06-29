@@ -10,11 +10,17 @@
 #define __Takagism__Room5__
 
 #include <stdio.h>
+#include "Item.h"
 
 class Room5 {
 private:
+    Item table;
+    Item tableT;
     void drawWall(GLuint texture);
+    void initTable();
+    void initTableT();
 public:
+    void init();
     void drawRoom(GLuint texture);
 };
 

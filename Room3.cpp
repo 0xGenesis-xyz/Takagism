@@ -14,17 +14,18 @@ Room3::Room3() {
 }
 
 void Room3::init() {
-    char fileName[128]="bunny.obj";
-    float center[]={-0.2f, 0.4f, 3.6f};
-    GLfloat material_ambient[]={0.8f, 0.8f, 0.8f, 1.0f};
-    GLfloat material_diffuse[]={0.1f, 0.1f, 0.1f, 1.0f};
-    GLfloat material_specular[]={0.0f, 0.0f, 0.0f, 1.0f};
-    blackRabbit.init(fileName, center, material_ambient, material_diffuse, material_specular);
 }
 
 void Room3::drawRoom(GLuint texture) {
     drawWall(texture);
-    blackRabbit.drawItem(-0.2f, 0.4f, 3.6f);
+    drawBox();
+}
+
+void Room3::drawBox() {
+    glPushMatrix();
+    glTranslatef(-0.5f, 0.4f, 3.5f);
+    glutSolidCube(0.8);
+    glPopMatrix();
 }
 
 void Room3::drawWall(GLuint texture) {

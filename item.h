@@ -17,13 +17,17 @@
 class Item {
 private:
     float modelCenter[3];
+    float scale;
     float ambient[4];
     float diffuse[4];
     float specular[4];
 public:
     GLMmodel* model;
-    void init(char *fileName, float center[], GLfloat material_ambient[], GLfloat material_diffuse[], GLfloat material_specular[]);
-    void drawItem(float x, float y, float z);
+    bool display;
+    void init(char *fileName, float center[], float _scale, bool _display);
+//    void init(char *fileName, float center[], GLfloat material_ambient[], GLfloat material_diffuse[], GLfloat material_specular[]);
+    void drawItem();
+//    void drawItem(float x, float y, float z, float scale);
 };
 
 #endif /* defined(__Takagism__Item__) */

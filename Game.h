@@ -12,14 +12,13 @@
 #include "Camera.h"
 #include "Chamber.h"
 #include "Video.h"
+#include "Item.h"
 #include "Object.h"
 
 class Game {
 private:
     Object bunny1;
-    bool collection[5];     //items to collect
-    bool picked;            //item to pick up
-    bool key;
+    Item collection[5];     //items to collect
     bool toPut[3];          //item to put
     void initMap();
     void move();
@@ -33,6 +32,14 @@ private:
     float turnSpeed;
     bool smoothMove;
     bool smoothTurn;
+    
+    void initItems();
+    void initWhiteRabbit();
+    void initBlackRabbit();
+    void initCrystal();
+    void initBook();
+    void initVase();
+    
     void updateMoveSpeed();
     void updateTurnSpeed();
     void updateZoomToFit(Object&);

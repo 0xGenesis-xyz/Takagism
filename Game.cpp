@@ -36,12 +36,53 @@ void Game::init() {
     direct = M_PI * 1.5;
     camera.resetCamera(x, y, direct);
     chamber.init();
-    for (int i=0; i<5; i++)
-        collection[i]=true;
     for (int i=0; i<3; i++)
         toPut[i]=false;
-    picked=true;
-    key=false;
+    initItems();
+}
+
+void Game::initItems() {
+    initWhiteRabbit();
+    initBlackRabbit();
+    initCrystal();
+    initBook();
+    initVase();
+}
+
+void Game::initWhiteRabbit() {
+    char fileName[128]="bunny.obj";
+    float center[]={-4.5f, 1.1f, -3.6f};
+    GLfloat material_ambient[]={0.8f, 0.8f, 0.8f, 1.0f};
+    GLfloat material_diffuse[]={0.9f, 0.9f, 0.9f, 1.0f};
+    GLfloat material_specular[]={0.0f, 0.0f, 0.0f, 1.0f};
+    collection[0].init(fileName, center, 0.001f, true);
+}
+
+void Game::initBlackRabbit() {
+    char fileName[128]="bunny.obj";
+    float center[]={-0.5f, 1.0f, 3.5f};
+    GLfloat material_ambient[]={0.8f, 0.8f, 0.8f, 1.0f};
+    GLfloat material_diffuse[]={0.1f, 0.1f, 0.1f, 1.0f};
+    GLfloat material_specular[]={0.0f, 0.0f, 0.0f, 1.0f};
+    collection[1].init(fileName, center, 0.001f, true);
+}
+
+void Game::initCrystal() {
+    char fileName[128]="Crystal.obj";
+    float center[]={-1.0f, 0.3f, -3.0f};
+    collection[2].init(fileName, center, 0.1f, true);
+}
+
+void Game::initBook() {
+    char fileName[128]="book.obj";
+    float center[]={-2.0f, 0.3f, -3.0f};
+    collection[3].init(fileName, center, 0.1f, true);
+}
+
+void Game::initVase() {
+    char fileName[128]="vase.obj";
+    float center[]={-3.0f, 0.3f, -3.0f};
+    collection[4].init(fileName, center, 0.004f, true);
 }
 
 void Game::moveForward() {
@@ -330,15 +371,11 @@ void Game::drawScene() {
 
     chamber.drawChamber();
     for (int i=0; i<5; i++)
-        if (collection[i])
-            drawXXX();
+        if (collection[i].display)
+            collection[i].drawItem();
     for (int i=0; i<3; i++)
         if (toPut[i])
             drawXXX();
-    if (picked)
-        drawXXX();
-    if (key)
-        drawXXX();
 }
 
 void Game::screenCut(int width, int height) {
