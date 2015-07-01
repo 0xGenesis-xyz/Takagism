@@ -29,6 +29,7 @@ public:
     void drawItem();
     void drawItem(float rotate);
     void drawItem(float x, float y, float z);
+    void drawItem(float x, float y, float z, float rotate);
 };
 
 #endif /* defined(__Takagism__Item__) */

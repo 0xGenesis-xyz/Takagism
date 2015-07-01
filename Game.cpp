@@ -448,7 +448,11 @@ void Game::drawScene() {
     }
 
     chamber.drawChamber();
-    for (int i=0; i<5; i++)
+    if (collection[0].display) collection[0].drawItem(90);
+    if (collection[1].display) collection[1].drawItem(270);
+
+    if (collection[4].display) collection[4].drawItem(180);
+    for (int i=2; i<5; i++)
         if (collection[i].display)
             collection[i].drawItem();
     if (toPut)

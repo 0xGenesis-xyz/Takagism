@@ -79,7 +79,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT4, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT4, GL_DIFFUSE, light4_diffuse);
     glLightfv(GL_LIGHT4, GL_SPECULAR, light4_specular);
-    glLightfv(GL_LIGHT4, GL_POSITION, light4_pos);
+    //glLightfv(GL_LIGHT4, GL_POSITION, light4_pos);
     glEnable(GL_LIGHT4);
     
     GLfloat light5_pos[] = {5.5f, 2.8f, 3.5f};

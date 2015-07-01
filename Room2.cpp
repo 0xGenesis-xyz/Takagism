@@ -19,13 +19,13 @@ void Room2::init() {
 
 void Room2::initTable() {
     char fileName[128]="Table de nuit_Final.obj";
-    float center[]={-4.9f, 0.1f, -3.9f};
+    float center[]={-4.9f, 0.1f, -3.05f};
     table.init(fileName, center, 0.02f, true);
 }
 
 void Room2::drawRoom(GLuint texture) {
     drawWall(texture);
-    table.drawItem();
+    table.drawItem(90);
 
     glPushMatrix();
     glTranslatef(0.0f, 0.1f, -2.5f);

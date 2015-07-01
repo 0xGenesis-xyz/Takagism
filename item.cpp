@@ -48,3 +48,12 @@ void Item::drawItem(float x, float y, float z) {
     glmDraw(model, GLM_FLAT);
     glPopMatrix();
 }
+
+void Item::drawItem(float x, float y, float z, float rotate) {
+    glPushMatrix();
+    glTranslatef(x, y, z);
+    glRotatef(rotate, 0, 1, 0);
+    glScalef(scale, scale, scale);
+    glmDraw(model, GLM_FLAT);
+    glPopMatrix();
+}
