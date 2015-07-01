@@ -40,6 +40,7 @@ private:
 public:
     Video video;
     bool door;
+    int tex;
     void init();
     void drawChamber();
     GLint GenList();

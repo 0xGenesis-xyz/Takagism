@@ -76,6 +76,11 @@ void keyboard(unsigned char key, int x, int y)
             game.put();
             break;
         }
+        case 'y': {
+            game.chamber.tex++;
+            game.chamber.tex%=8;
+            break;
+        }
         case 'x': {
             game.camera.torch=!game.camera.torch;
             break;

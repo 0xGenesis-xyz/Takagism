@@ -15,6 +15,7 @@ void Chamber::init() {
     scale=0.36f;
     door=false;
     doorRotate=0.0f;
+    tex=0;
     room2.init();
     room3.init();
     room4.init();
@@ -44,8 +45,8 @@ GLint Chamber::GenList() {
 void Chamber::drawChamber() {
     glEnable(GL_LIGHTING);
     GLfloat light_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f};
-    GLfloat light_diffuse[] = {0.6f, 0.6f, 0.6f, 1.0f};
-    GLfloat light_specular[] = {0.6f, 0.6f, 0.6f, 1.0f};
+    GLfloat light_diffuse[] = {0.4f, 0.4f, 0.4f, 1.0f};
+    GLfloat light_specular[] = {0.4f, 0.4f, 0.4f, 1.0f};
     
     GLfloat light1_pos[] = {3.5f, 2.8f, -2.5f};
     
@@ -55,7 +56,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT1, GL_POSITION, light1_pos);
     glEnable(GL_LIGHT1);
     
-    GLfloat light2_pos[] = {-4.0f, 2.8f, -3.0f};
+    GLfloat light2_pos[] = {-4.6f, 2.8f, -3.6f};
     
     glLightfv(GL_LIGHT2, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT2, GL_DIFFUSE, light_diffuse);
@@ -63,7 +64,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT2, GL_POSITION, light2_pos);
     glEnable(GL_LIGHT2);
     
-    GLfloat light3_pos[] = {-1.2f, 2.8f, 3.8f};
+    GLfloat light3_pos[] = {-0.4f, 2.8f, 2.3f};
     
     glLightfv(GL_LIGHT3, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT3, GL_DIFFUSE, light_diffuse);
@@ -73,7 +74,7 @@ void Chamber::drawChamber() {
     
     GLfloat light4_diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
     GLfloat light4_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat light4_pos[] = {2.5f, 2.8f, 2.0f};
+    GLfloat light4_pos[] = {2.5f, 2.8f, 1.5f};
     
     glLightfv(GL_LIGHT4, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT4, GL_DIFFUSE, light4_diffuse);
@@ -81,7 +82,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT4, GL_POSITION, light4_pos);
     glEnable(GL_LIGHT4);
     
-    GLfloat light5_pos[] = {5.5f, 2.8f, 3.2f};
+    GLfloat light5_pos[] = {5.5f, 2.8f, 3.5f};
     
     glLightfv(GL_LIGHT5, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT5, GL_DIFFUSE, light4_diffuse);
@@ -102,13 +103,18 @@ void Chamber::drawSphere() {
     scale+=0.02f;
     if (scale>0.8f)
         scale=0.36f;
+    
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, textures[tex]);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    
     glPushMatrix();
     glTranslatef(-4.6, 2.6, translate);
-//    glTranslatef(-4.6, 2.6, -3.6);
     glScalef(scale, scale, scale);
     glutSolidSphere(0.4, 50, 50);
     glPopMatrix();
-    std::cout<<translate<<" "<<scale<<std::endl;
+    
+    glDisable(GL_TEXTURE_2D);
 }
 
 void Chamber::drawDoor(GLuint doorTex) {

@@ -26,6 +26,49 @@ void Room2::initTable() {
 void Room2::drawRoom(GLuint texture) {
     drawWall(texture);
     table.drawItem();
+    
+    glPushMatrix();
+    glTranslatef(0.0f, 0.1f, -2.5f);
+    glRotatef(90, -1, 0, 0);
+    GLUquadric *cylinder=gluNewQuadric();
+    gluCylinder(cylinder, 0.3, 0.3, 1.8, 32, 5);
+    
+    glTranslatef(-1.0f, 0.0f, 0.0f);
+    gluCylinder(cylinder, 0.3, 0.0, 1.8, 32, 5);
+    
+    glTranslatef(-1.0f, 0.0f, 0.0f);
+    glRotatef(90, 1, 0, 0);
+    glBegin(GL_QUAD_STRIP);
+    glVertex3f(0.173f, 0.0f, 0.1f);
+    glVertex3f(0.173f, 1.0f, 0.1f);
+    glVertex3f(0.0f, 0.0f, -0.2f);
+    glVertex3f(0.0f, 1.0f, -0.2f);
+    glVertex3f(-0.173f, 0.0f, 0.1f);
+    glVertex3f(-0.173f, 1.0f, 0.1f);
+    glVertex3f(0.173f, 0.0f, 0.1f);
+    glVertex3f(0.173f, 1.0f, 0.1f);
+    glEnd();
+    glBegin(GL_TRIANGLES);
+    glVertex3f(0.173f, 1.0f, 0.1f);
+    glVertex3f(0.0f, 1.0f, -0.2f);
+    glVertex3f(-0.173f, 1.0f, 0.1f);
+    glEnd();
+    
+    glTranslatef(-1.0f, 0.0f, 0.0f);
+    glBegin(GL_QUAD_STRIP);
+    glVertex3f(0.2f, 0.0f, 0.2f);
+    glVertex3f(0.1f, 1.0f, 0.1f);
+    glVertex3f(0.2f, 0.0f, -0.2f);
+    glVertex3f(0.1f, 1.0f, -0.1f);
+    glVertex3f(-0.2f, 0.0f, -0.2f);
+    glVertex3f(-0.1f, 1.0f, -0.1f);
+    glVertex3f(-0.2f, 0.0f, 0.2f);
+    glVertex3f(-0.1f, 1.0f, 0.1f);
+    glVertex3f(0.2f, 0.0f, 0.2f);
+    glVertex3f(0.1f, 1.0f, 0.1f);
+    glEnd();
+
+    glPopMatrix();
 }
 
 void Room2::drawWall(GLuint texture) {

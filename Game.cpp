@@ -12,7 +12,7 @@
 #include "Game.h"
 #include "Object.h"
 
-#define RANGE 0.8
+#define RANGE 1.2
 
 static const float STEP = 0.4f;
 static const float ANGLE = M_PI / 60;
@@ -307,7 +307,8 @@ void Game::pickup() {
 }
 
 void Game::put() {
-    if (!toPut) {
+    float table[3]={2.5f, 0.2f, -0.7f};
+    if (!toPut && distance(table)<RANGE) {
         bool flag=false;
         for (int i=0; i<3; i++)
             flag=flag || collection[i].display;
@@ -472,6 +473,17 @@ void Game::initMap() {
     for (int i=19;i<=21;i++)
         for (int j=13;j<=22;j++)
             map[i][j]=1;
+    for (int i=6;i<=9;i++)
+        for (int j=9;j<=11;j++)
+            map[i][j]=1;
+    for (int i=7;i<=8;i++) {
+        for (int j=14;j<=16;j++)
+            map[i][j]=1;
+        for (int j=19;j<=21;j++)
+            map[i][j]=1;
+        for (int j=24;j<=26;j++)
+            map[i][j]=1;
+    }
 }
 
 void Game::drawXXX() {
