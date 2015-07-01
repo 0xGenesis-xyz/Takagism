@@ -31,8 +31,8 @@ void Nurbs::drawNurbs() {
     GLfloat knots[8]={0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0};
     
     glPushMatrix();
-    glTranslatef(-1.5f, 1.5f, 0.0f);
-    glScalef(0.5, 0.5, 1);
+    glTranslatef(-1.6f, 1.3f, 0.0f);
+    glScalef(0.6, 0.6, 1);
     
     gluBeginSurface(theNurb);
     gluNurbsSurface(theNurb, 4, tknots, 4, tknots, 2*2, 2, &tcoords[0][0][0], 2, 2, GL_MAP2_TEXTURE_COORD_2);

@@ -14,8 +14,8 @@
 
 class Room3 {
 private:
-    Item blackRabbit;
     void drawWall(GLuint texture);
+    void drawBox();
 public:
     Room3();
     void init();

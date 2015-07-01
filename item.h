@@ -16,13 +16,18 @@
 
 class Item {
 private:
-    float modelCenter[3];
+    float scale;
     float ambient[4];
     float diffuse[4];
     float specular[4];
 public:
     GLMmodel* model;
-    void init(char *fileName, float center[], GLfloat material_ambient[], GLfloat material_diffuse[], GLfloat material_specular[]);
+    float modelCenter[3];
+    bool display;
+    void init(char *fileName, float center[], float _scale, bool _display);
+//    void init(char *fileName, float center[], GLfloat material_ambient[], GLfloat material_diffuse[], GLfloat material_specular[]);
+    void drawItem();
+    void drawItem(float rotate);
     void drawItem(float x, float y, float z);
 };
 

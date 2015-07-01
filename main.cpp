@@ -68,6 +68,19 @@ void keyboard(unsigned char key, int x, int y)
             game.zoomOut();
             break;
         }
+        case 'p': {
+            game.pickup();
+            break;
+        }
+        case 'u': {
+            game.put();
+            break;
+        }
+        case 'y': {
+            game.chamber.tex++;
+            game.chamber.tex%=8;
+            break;
+        }
         case 'x': {
             game.camera.torch=!game.camera.torch;
             break;
@@ -84,9 +97,6 @@ void keyboard(unsigned char key, int x, int y)
         }
         case 'v': {
             game.screenCut(window_width, window_height);
-        }
-        case 't': {
-            game.chamber.door=!game.chamber.door;
         }
 
         default:
@@ -139,7 +149,7 @@ void init() {
 /// Idle function
 void idle(void)
 {
-    //game.chamber.video.drawNext();
+//    game.chamber.video.drawNext();
     
     glutPostRedisplay();
 }

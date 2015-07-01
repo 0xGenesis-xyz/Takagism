@@ -12,27 +12,35 @@
 #include "Camera.h"
 #include "Chamber.h"
 #include "Video.h"
+#include "Item.h"
 #include "Object.h"
 
 class Game {
 private:
     Object bunny1;
-    bool collection[5];     //items to collect
-    bool picked;            //item to pick up
-    bool key;
-    bool toPut[3];          //item to put
+    Item collection[5];     //items to collect
+    bool toPut;             //item to put
     void initMap();
     void move();
     void turn();
     void drawXXX();
     float x, y;
     const float z;
-    float direct;    // from 0 to 2 pi
+    float direct;           // from 0 to 2 pi
     float perspAngle;
     float moveSpeed;
     float turnSpeed;
     bool smoothMove;
     bool smoothTurn;
+    
+    void initItems();
+    void initWhiteRabbit();
+    void initBlackRabbit();
+    void initCrystal();
+    void initBook();
+    void initVase();
+    
+    float distance(float position[]);
     void updateMoveSpeed();
     void updateTurnSpeed();
     void updateZoomToFit(Object&);
@@ -57,6 +65,8 @@ public:
     void zoomIn();
     void zoomOut();
     void zoomToFit();
+    void pickup();
+    void put();
 };
 
 #endif

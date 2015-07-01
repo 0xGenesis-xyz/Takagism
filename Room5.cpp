@@ -9,8 +9,28 @@
 #include <GLUT/GLUT.h>
 #include "Room5.h"
 
+void Room5::init() {
+    initTable();
+    initTableT();
+}
+
+void Room5::initTable() {
+    char fileName[128]="Table de nuit_Final.obj";
+    float center[]={3.6f, 0.1f, 3.9f};
+    table.init(fileName, center, 0.02f, true);
+}
+
+void Room5::initTableT() {
+    char fileName[128]="Granit kitchen table.obj";
+    float center[]={2.5f, 0.2f, -0.7f};
+    tableT.init(fileName, center, 0.01f, true);
+}
+
 void Room5::drawRoom(GLuint texture) {
     drawWall(texture);
+
+    table.drawItem(180.0f);
+    tableT.drawItem();
 }
 
 void Room5::drawWall(GLuint texture) {

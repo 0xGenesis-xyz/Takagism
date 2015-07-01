@@ -12,6 +12,8 @@
 #include "Game.h"
 #include "Object.h"
 
+#define RANGE 1.2
+
 static const float STEP = 0.4f;
 static const float ANGLE = M_PI / 60;
 static const float TIME_RANGE = 2.0f;
@@ -36,12 +38,52 @@ void Game::init() {
     direct = M_PI * 1.5;
     camera.resetCamera(x, y, direct);
     chamber.init();
-    for (int i=0; i<5; i++)
-        collection[i]=true;
-    for (int i=0; i<3; i++)
-        toPut[i]=false;
-    picked=true;
-    key=false;
+    initItems();
+    toPut=false;
+}
+
+void Game::initItems() {
+    initWhiteRabbit();
+    initBlackRabbit();
+    initCrystal();
+    initBook();
+    initVase();
+}
+
+void Game::initWhiteRabbit() {
+    char fileName[128]="bunny.obj";
+    float center[]={-4.5f, 1.1f, -3.6f};
+    GLfloat material_ambient[]={0.8f, 0.8f, 0.8f, 1.0f};
+    GLfloat material_diffuse[]={0.9f, 0.9f, 0.9f, 1.0f};
+    GLfloat material_specular[]={0.0f, 0.0f, 0.0f, 1.0f};
+    collection[0].init(fileName, center, 0.001f, true);
+}
+
+void Game::initBlackRabbit() {
+    char fileName[128]="bunny.obj";
+    float center[]={-0.5f, 1.0f, 3.5f};
+    GLfloat material_ambient[]={0.8f, 0.8f, 0.8f, 1.0f};
+    GLfloat material_diffuse[]={0.1f, 0.1f, 0.1f, 1.0f};
+    GLfloat material_specular[]={0.0f, 0.0f, 0.0f, 1.0f};
+    collection[1].init(fileName, center, 0.001f, true);
+}
+
+void Game::initCrystal() {
+    char fileName[128]="Crystal.obj";
+    float center[]={-2.3f, 0.1f, -0.6f};
+    collection[2].init(fileName, center, 0.1f, true);
+}
+
+void Game::initBook() {
+    char fileName[128]="book.obj";
+    float center[]={-0.7f, 0.9f, 3.5f};
+    collection[3].init(fileName, center, 0.1f, false);
+}
+
+void Game::initVase() {
+    char fileName[128]="vase.obj";
+    float center[]={3.0f, 0.8f, 3.5f};
+    collection[4].init(fileName, center, 0.004f, true);
 }
 
 void Game::moveForward() {
@@ -251,6 +293,36 @@ void Game::updateZoomToFit(Object& obj) {
     }
 }
 
+void Game::pickup() {
+    for (int i=0; i<4; i++)
+        if (distance(collection[i].modelCenter)<RANGE && collection[i].display) {
+            collection[i].display=false;
+            std::cout<<"pick up "<<i<<std::endl;
+        }
+    if (distance(collection[4].modelCenter)<RANGE && collection[4].display && toPut && !collection[3].display) {
+        collection[4].display=false;
+        std::cout<<"pick up 4"<<std::endl;
+        chamber.door=!chamber.door;
+    }
+}
+
+void Game::put() {
+    float table[3]={2.5f, 0.2f, -0.7f};
+    if (!toPut && distance(table)<RANGE) {
+        bool flag=false;
+        for (int i=0; i<3; i++)
+            flag=flag || collection[i].display;
+        if (!flag) {
+            toPut=true;
+            collection[3].display=true;
+        }
+    }
+}
+
+float Game::distance(float position[]) {
+    return sqrtf(pow(camera.eye[0]-position[0], 2)+pow(camera.eye[2]-position[2], 2));
+}
+
 void Game::drawScene() {
     glEnable(GL_LIGHTING);
     GLfloat light_ambient[] = {camera.intensity*0.1f, camera.intensity*0.1f, camera.intensity*0.1f, 1.0f};
@@ -343,14 +415,9 @@ void Game::drawScene() {
 
     chamber.drawChamber();
     for (int i=0; i<5; i++)
-        if (collection[i])
-            drawXXX();
-    for (int i=0; i<3; i++)
-        if (toPut[i])
-            drawXXX();
-    if (picked)
-        drawXXX();
-    if (key)
+        if (collection[i].display)
+            collection[i].drawItem();
+    if (toPut)
         drawXXX();
 }
 
@@ -416,8 +483,26 @@ void Game::initMap() {
         map[i][25]=1;
     for (int i=30;i<=40;i++)
         map[i][25]=1;
+    for (int i=19;i<=21;i++)
+        for (int j=13;j<=22;j++)
+            map[i][j]=1;
+    for (int i=6;i<=9;i++)
+        for (int j=9;j<=11;j++)
+            map[i][j]=1;
+    for (int i=7;i<=8;i++) {
+        for (int j=14;j<=16;j++)
+            map[i][j]=1;
+        for (int j=19;j<=21;j++)
+            map[i][j]=1;
+        for (int j=24;j<=26;j++)
+            map[i][j]=1;
+    }
 }
 
 void Game::drawXXX() {
-    
+    glPushMatrix();
+    collection[0].drawItem(2.8f, 1.1f, -0.5f);
+    collection[2].drawItem(3.2f, 1.0f, -0.4f);
+    collection[1].drawItem(3.6f, 1.1f, -0.3f);
+    glPopMatrix();
 }

@@ -14,17 +14,61 @@ Room2::Room2() {
 }
 
 void Room2::init() {
-    char fileName[128]="bunny.obj";
-    float center[]={-4.6f, 0.4f, -3.6f};
-    GLfloat material_ambient[]={0.8f, 0.8f, 0.8f, 1.0f};
-    GLfloat material_diffuse[]={0.9f, 0.9f, 0.9f, 1.0f};
-    GLfloat material_specular[]={0.0f, 0.0f, 0.0f, 1.0f};
-    whiteRabbit.init(fileName, center, material_ambient, material_diffuse, material_specular);
+    initTable();
+}
+
+void Room2::initTable() {
+    char fileName[128]="Table de nuit_Final.obj";
+    float center[]={-4.9f, 0.1f, -3.9f};
+    table.init(fileName, center, 0.02f, true);
 }
 
 void Room2::drawRoom(GLuint texture) {
     drawWall(texture);
-    whiteRabbit.drawItem(-4.6f, 0.4f, -3.6f);
+    table.drawItem();
+    
+    glPushMatrix();
+    glTranslatef(0.0f, 0.1f, -2.5f);
+    glRotatef(90, -1, 0, 0);
+    GLUquadric *cylinder=gluNewQuadric();
+    gluCylinder(cylinder, 0.3, 0.3, 1.8, 32, 5);
+    
+    glTranslatef(-1.0f, 0.0f, 0.0f);
+    gluCylinder(cylinder, 0.3, 0.0, 1.8, 32, 5);
+    
+    glTranslatef(-1.0f, 0.0f, 0.0f);
+    glRotatef(90, 1, 0, 0);
+    glBegin(GL_QUAD_STRIP);
+    glVertex3f(0.173f, 0.0f, 0.1f);
+    glVertex3f(0.173f, 1.0f, 0.1f);
+    glVertex3f(0.0f, 0.0f, -0.2f);
+    glVertex3f(0.0f, 1.0f, -0.2f);
+    glVertex3f(-0.173f, 0.0f, 0.1f);
+    glVertex3f(-0.173f, 1.0f, 0.1f);
+    glVertex3f(0.173f, 0.0f, 0.1f);
+    glVertex3f(0.173f, 1.0f, 0.1f);
+    glEnd();
+    glBegin(GL_TRIANGLES);
+    glVertex3f(0.173f, 1.0f, 0.1f);
+    glVertex3f(0.0f, 1.0f, -0.2f);
+    glVertex3f(-0.173f, 1.0f, 0.1f);
+    glEnd();
+    
+    glTranslatef(-1.0f, 0.0f, 0.0f);
+    glBegin(GL_QUAD_STRIP);
+    glVertex3f(0.2f, 0.0f, 0.2f);
+    glVertex3f(0.1f, 1.0f, 0.1f);
+    glVertex3f(0.2f, 0.0f, -0.2f);
+    glVertex3f(0.1f, 1.0f, -0.1f);
+    glVertex3f(-0.2f, 0.0f, -0.2f);
+    glVertex3f(-0.1f, 1.0f, -0.1f);
+    glVertex3f(-0.2f, 0.0f, 0.2f);
+    glVertex3f(-0.1f, 1.0f, 0.1f);
+    glVertex3f(0.2f, 0.0f, 0.2f);
+    glVertex3f(0.1f, 1.0f, 0.1f);
+    glEnd();
+
+    glPopMatrix();
 }
 
 void Room2::drawWall(GLuint texture) {
