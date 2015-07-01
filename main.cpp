@@ -40,14 +40,6 @@ void keyboard(unsigned char key, int x, int y)
             game.moveBackward();
             break;
         }
-        case 'q': {
-            //game.camera.moveCenter(-0.1);
-            break;
-        }
-        case 'e': {
-            //game.camera.moveCenter(0.1);
-            break;
-        }
         case 'f': {
             game.zoomToFit();
             break;
@@ -97,6 +89,11 @@ void keyboard(unsigned char key, int x, int y)
         }
         case 'v': {
             game.screenCut(window_width, window_height);
+            break;
+        }
+        case 'q': {
+            game.printPos();
+            break;
         }
 
         default:

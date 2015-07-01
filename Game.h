@@ -14,6 +14,7 @@
 #include "Video.h"
 #include "Item.h"
 #include "Object.h"
+#include <iostream>
 
 class Game {
 private:
@@ -55,6 +56,7 @@ public:
     Chamber chamber;
     float getPerspAngle() { return perspAngle; }
     void init();
+    void printPos() { std::cout << x << " " << y << std::endl; }
     void drawScene();
     void screenCut(int width, int height);
     void stopMove();
