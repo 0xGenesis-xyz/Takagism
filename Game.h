@@ -17,8 +17,8 @@
 
 class Game {
 private:
-    Object bunny1;
     Item collection[5];     //items to collect
+    Object itemPos[5];
     bool toPut;             //item to put
     void initMap();
     void move();
@@ -32,14 +32,15 @@ private:
     float turnSpeed;
     bool smoothMove;
     bool smoothTurn;
-    
+
     void initItems();
     void initWhiteRabbit();
     void initBlackRabbit();
     void initCrystal();
     void initBook();
     void initVase();
-    
+
+    int fitItem;
     float distance(float position[]);
     void updateMoveSpeed();
     void updateTurnSpeed();

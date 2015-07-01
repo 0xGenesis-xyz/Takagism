@@ -12,19 +12,18 @@
 #include "Game.h"
 #include "Object.h"
 
-#define RANGE 1.2
+#define RANGE 1.8
 
 static const float STEP = 0.4f;
 static const float ANGLE = M_PI / 60;
 static const float TIME_RANGE = 2.0f;
 static const float DTIME = 0.4f;
 static const int ZOOM_TO_FIT_FRAMES = 20;
+static const float COLLISION_ALLOWENCE = 0.15;
 
 void Game::init() {
     initMap();
     camera.init();
-    //bunny1 = Object(-4.6f, 0.4f, -3.6f, -3.6f, 0.4f, -2.6f, 0.6f);
-    bunny1 = Object(4.0f, 3.0f, 0.4f, M_PI * 1.25, 2.0f);
     x = 8.0f;
     y = 49.0f;
     perspAngle = 90.0f;
@@ -33,6 +32,7 @@ void Game::init() {
     moving = STILL;
     turning = NO_TURNING;
     zooming = NO_ZOOM_TO_FIT;
+    fitItem = -1;
     smoothMove = false;
     smoothTurn = false;
     direct = M_PI * 1.5;
@@ -57,6 +57,7 @@ void Game::initWhiteRabbit() {
     GLfloat material_diffuse[]={0.9f, 0.9f, 0.9f, 1.0f};
     GLfloat material_specular[]={0.0f, 0.0f, 0.0f, 1.0f};
     collection[0].init(fileName, center, 0.001f, true);
+    itemPos[0] = Object(4.0f, 3.5f, 1.3f, M_PI * 1.25, 1.6f);
 }
 
 void Game::initBlackRabbit() {
@@ -66,24 +67,28 @@ void Game::initBlackRabbit() {
     GLfloat material_diffuse[]={0.1f, 0.1f, 0.1f, 1.0f};
     GLfloat material_specular[]={0.0f, 0.0f, 0.0f, 1.0f};
     collection[1].init(fileName, center, 0.001f, true);
+    itemPos[1] = Object(36.0f, 22.0f, 1.1f, M_PI * 0.25, 1.6f);
 }
 
 void Game::initCrystal() {
     char fileName[128]="Crystal.obj";
     float center[]={-2.3f, 0.1f, -0.6f};
     collection[2].init(fileName, center, 0.1f, true);
+    itemPos[2] = Object(17.0f, 12.5f, 0.2f, M_PI * 0.3, 1.2f);
 }
 
 void Game::initBook() {
     char fileName[128]="book.obj";
     float center[]={-0.7f, 0.9f, 3.5f};
     collection[3].init(fileName, center, 0.1f, false);
+    itemPos[3] = Object(36.0f, 20.0f, 1.1f, M_PI * 0.25, 1.2f);
 }
 
 void Game::initVase() {
     char fileName[128]="vase.obj";
     float center[]={3.0f, 0.8f, 3.5f};
     collection[4].init(fileName, center, 0.004f, true);
+    itemPos[4] = Object(37.0f, 40.0f, 1.0f, M_PI * 0, 1.8f);
 }
 
 void Game::moveForward() {
@@ -151,6 +156,7 @@ void Game::updateMoveSpeed() {
 
 void Game::move() {
     float newx, newy;
+    //std::cout << x << " " << y << std::endl;
     if (moving == FORWARD || moving == STOP_FORWARD) {
         newx = x + moveSpeed * cos(direct);
         newy = y + moveSpeed * sin(direct);
@@ -159,7 +165,10 @@ void Game::move() {
         newx = x - moveSpeed * cos(direct);
         newy = y - moveSpeed * sin(direct);
     }
-    if (!map[lrint(newx)][lrint(newy)]) {  // round and cast to long int
+    if (!map[lrint(newx)][lrint(newy)] &&
+        !map[lrint(newx + COLLISION_ALLOWENCE)][lrint(newy + COLLISION_ALLOWENCE)] &&
+        !map[lrint(newx - COLLISION_ALLOWENCE)][lrint(newy - COLLISION_ALLOWENCE)]) {
+        // round and cast to long int
         x = newx;
         y = newy;
         camera.resetCamera(x, y, direct);
@@ -224,16 +233,29 @@ void Game::zoomOut() {
 }
 
 void Game::zoomToFit() {
-    switch (zooming) {
-    case NO_ZOOM_TO_FIT:
-        zooming = OPERATING;
-        break;
-    case ZOOM_TO_FIT:
-        zooming = RESTORING;
-        break;
-    case OPERATING:
-    case RESTORING:
-        break;    // zoomToFit state cannot be changed
+    for (int i=0; i<4; i++) {
+        if (distance(collection[i].modelCenter)<RANGE && collection[i].display)
+            if (i != 2 || (y > 10.4 && x > 15.4))
+                fitItem = i;
+    }
+
+    if (distance(collection[4].modelCenter)<RANGE && collection[4].display && toPut && !collection[3].display) {
+        fitItem = 4;
+    }
+
+    if (fitItem != -1) {
+    std::cout << "Fit " << fitItem << std::endl;
+        switch (zooming) {
+        case NO_ZOOM_TO_FIT:
+            zooming = OPERATING;
+            break;
+        case ZOOM_TO_FIT:
+            zooming = RESTORING;
+            break;
+        case OPERATING:
+        case RESTORING:
+            break;    // zoomToFit state cannot be changed
+        }
     }
 }
 
@@ -285,8 +307,10 @@ void Game::updateZoomToFit(Object& obj) {
         else {
             if (zooming == OPERATING)
                 zooming = ZOOM_TO_FIT;
-            else if (zooming == RESTORING)
+            else if (zooming == RESTORING) {
                 zooming = NO_ZOOM_TO_FIT;
+                fitItem = -1;
+            }
             count = 0;
             calc = false;
         }
@@ -294,6 +318,7 @@ void Game::updateZoomToFit(Object& obj) {
 }
 
 void Game::pickup() {
+    /*
     for (int i=0; i<4; i++)
         if (distance(collection[i].modelCenter)<RANGE && collection[i].display) {
             collection[i].display=false;
@@ -303,6 +328,12 @@ void Game::pickup() {
         collection[4].display=false;
         std::cout<<"pick up 4"<<std::endl;
         chamber.door=!chamber.door;
+    }
+    */
+    if (fitItem != -1) {
+        collection[fitItem].display = false;
+        if (fitItem == 4)
+            chamber.door = !chamber.door;
     }
 }
 
@@ -328,12 +359,12 @@ void Game::drawScene() {
     GLfloat light_ambient[] = {camera.intensity*0.1f, camera.intensity*0.1f, camera.intensity*0.1f, 1.0f};
     GLfloat light_diffuse[] = {camera.intensity, camera.intensity, camera.intensity, 1.0f};
     GLfloat light_specular[] = {camera.intensity, camera.intensity, camera.intensity, 1.0f};
-    //GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2]};
+    GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2]};
     static float angle = 0;
     angle += M_PI / 180;
     if (angle >= 2 * M_PI)
         angle = 0;
-    GLfloat light_direction[] = {static_cast<GLfloat>(sin(angle)), 0, static_cast<GLfloat>(cos(angle))};
+    //GLfloat light_direction[] = {static_cast<GLfloat>(sin(angle)), 0, static_cast<GLfloat>(cos(angle))};
     //std::cout << camera.center[0] - camera.eye[0] << " " << camera.center[1] - camera.eye[1] << " " << camera.center[2] - camera.eye[2] << std::endl;
     //GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[2]-camera.eye[2], camera.center[1]-camera.eye[1]};
     //GLfloat light_direction[] = {camera.center[1]-camera.eye[1], camera.center[0]-camera.eye[0], camera.center[2]-camera.eye[2]};
@@ -345,7 +376,6 @@ void Game::drawScene() {
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT0, GL_POSITION, camera.eye);
-    //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, camera.center);// light_direction);
     glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light_direction);
     glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 127.0);
     glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
@@ -356,19 +386,12 @@ void Game::drawScene() {
 
     switch (moving) {
     case FORWARD:
-        if (!smoothMove)
-            updateMoveSpeed();
-        move();
-        break;
     case BACKWARD:
         if (!smoothMove)
             updateMoveSpeed();
         move();
         break;
     case STOP_FORWARD:
-        updateMoveSpeed();
-        move();
-        break;
     case STOP_BACKWARD:
         updateMoveSpeed();
         move();
@@ -381,19 +404,12 @@ void Game::drawScene() {
 
     switch (turning) {
     case LEFT:
-        if (!smoothTurn)
-            updateTurnSpeed();
-        turn();
-        break;
     case RIGHT:
         if (!smoothTurn)
             updateTurnSpeed();
         turn();
         break;
     case STOP_LEFT:
-        updateTurnSpeed();
-        turn();
-        break;
     case STOP_RIGHT:
         updateTurnSpeed();
         turn();
@@ -407,7 +423,7 @@ void Game::drawScene() {
     switch (zooming) {
     case OPERATING:
     case RESTORING:
-        updateZoomToFit(bunny1);
+        updateZoomToFit(itemPos[fitItem]);
         break;
     default:
         break;

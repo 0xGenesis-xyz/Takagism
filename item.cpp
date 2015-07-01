@@ -24,7 +24,7 @@ void Item::drawItem() {
 //    glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
 //    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
 //    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-    
+
     glPushMatrix();
     glTranslatef(modelCenter[0], modelCenter[1], modelCenter[2]);
     glScalef(scale, scale, scale);
