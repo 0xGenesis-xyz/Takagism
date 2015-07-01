@@ -234,7 +234,7 @@ void Game::zoomOut() {
 
 void Game::zoomToFit() {
     for (int i=0; i<4; i++) {
-        if (distance(collection[i].modelCenter)<RANGE && collection[i].display)
+        if (collection[i].display && distance(collection[i].modelCenter)<RANGE)
             if ((i == 2 && y > 10.4 && x > 15.4) ||
                 ((i == 1 || i == 3) && y < 24.4))
                 fitItem = i;
