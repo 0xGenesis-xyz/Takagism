@@ -146,7 +146,7 @@ void init() {
 /// Idle function
 void idle(void)
 {
-//    game.chamber.video.drawNext();
+    game.chamber.video.drawNext();
     
     glutPostRedisplay();
 }
