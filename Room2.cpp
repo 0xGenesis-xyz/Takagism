@@ -74,7 +74,8 @@ void Room2::drawRoom(GLuint texture) {
 void Room2::drawWall(GLuint texture) {
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texture);
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
     glPushMatrix();
     glBegin(GL_QUADS);
     glTexCoord2d(0, 0); glVertex3f(-5, 0, -4);

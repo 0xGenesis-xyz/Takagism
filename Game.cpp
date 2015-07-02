@@ -411,11 +411,7 @@ void Game::drawScene() {
         break;
     }
 
-    if (collection[0].display) collection[0].drawItem();
-    if (collection[1].display) collection[1].drawItem();
-
-    if (collection[4].display) collection[4].drawItem();
-    for (int i=2; i<5; i++)
+    for (int i = 0; i < 5; i++)
         if (collection[i].display)
             collection[i].drawItem();
     if (toPut)
@@ -426,19 +422,21 @@ void Game::drawScene() {
 
 void Game::setLight() {
     glEnable(GL_LIGHTING);
+    static const float RATIO = 0.1f;
 
-    GLfloat light_ambient[] = {camera.intensity*0.1f, camera.intensity*0.1f, camera.intensity*0.1f, 1.0f};
-    GLfloat torch_pos[] = {camera.eye[0], 1.3f, camera.eye[2], 1};
+    GLfloat light_ambient[] = {RATIO, RATIO, RATIO, 1.0f};
+    GLfloat torch_pos[] = {camera.eye[0], 1.1f, camera.eye[2], 1};
     GLfloat light_pos[] = {-1.0f, 1.0f, 1.0f, 1.0f};
     GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2], 1};
 
-    GLfloat light_torch[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat light_torch[] = {camera.intensity, camera.intensity, camera.intensity, 1.0f};
 
     // ambient
     glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, light_ambient);
     glLightfv(GL_LIGHT1, GL_SPECULAR, light_ambient);
-    glLightfv(GL_LIGHT1, GL_POSITION, light_pos);
+    //glLightfv(GL_LIGHT1, GL_POSITION, light_pos);
+    glLightfv(GL_LIGHT1, GL_POSITION, torch_pos);
     glEnable(GL_LIGHT1);
 
     // torch
