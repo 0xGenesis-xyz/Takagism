@@ -20,7 +20,7 @@ void Chamber::init() {
     room3.init();
     room4.init();
     room5.init();
-//    video.init();
+    video.init();
     listID=GenList();
 }
 
@@ -44,9 +44,9 @@ GLint Chamber::GenList() {
 
 void Chamber::drawChamber() {
     glEnable(GL_LIGHTING);
-    GLfloat light_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f};
-    GLfloat light_diffuse[] = {0.4f, 0.4f, 0.4f, 1.0f};
-    GLfloat light_specular[] = {0.4f, 0.4f, 0.4f, 1.0f};
+    GLfloat light_ambient[] = {0.06f, 0.06f, 0.06f, 1.0f};
+    GLfloat light_diffuse[] = {0.1f, 0.1f, 0.1f, 1.0f};
+    GLfloat light_specular[] = {0.1f, 0.1f, 0.1f, 1.0f};
     
     GLfloat light1_pos[] = {3.5f, 2.8f, -2.5f};
     
@@ -79,7 +79,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT4, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT4, GL_DIFFUSE, light4_diffuse);
     glLightfv(GL_LIGHT4, GL_SPECULAR, light4_specular);
-    //glLightfv(GL_LIGHT4, GL_POSITION, light4_pos);
+    glLightfv(GL_LIGHT4, GL_POSITION, light4_pos);
     glEnable(GL_LIGHT4);
     
     GLfloat light5_pos[] = {5.5f, 2.8f, 3.5f};
@@ -91,7 +91,7 @@ void Chamber::drawChamber() {
     glEnable(GL_LIGHT5);
 
     glCallList(listID);
-//    video.play();
+    video.play();
     drawSphere();
     drawDoor(textures[8]);
 }

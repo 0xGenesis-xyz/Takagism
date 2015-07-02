@@ -374,7 +374,8 @@ float Game::distance(float position[]) {
 
 void Game::drawScene() {
     glEnable(GL_LIGHTING);
-    GLfloat light_ambient[] = {camera.intensity*0.1f, camera.intensity*0.1f, camera.intensity*0.1f, 1.0f};
+//    GLfloat light_ambient[] = {camera.intensity*0.1f, camera.intensity*0.1f, camera.intensity*0.1f, 1.0f};
+    GLfloat light_ambient[] = {camera.intensity, camera.intensity, camera.intensity, 1.0f};
     GLfloat light_diffuse[] = {camera.intensity, camera.intensity, camera.intensity, 1.0f};
     GLfloat light_specular[] = {camera.intensity, camera.intensity, camera.intensity, 1.0f};
     GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2]};
