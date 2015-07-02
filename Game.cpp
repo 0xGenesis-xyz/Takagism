@@ -445,7 +445,7 @@ void Game::setLight() {
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_torch);
     glLightfv(GL_LIGHT0, GL_POSITION, torch_pos);
     glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light_direction);
-    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 127.0);
+    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 50.0);
     glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
     glEnable(GL_LIGHT0);
 

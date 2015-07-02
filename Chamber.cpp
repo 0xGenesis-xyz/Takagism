@@ -46,10 +46,12 @@ void Chamber::drawChamber() {
     static float ambient[] = {1.0f, 1.0f, 1.0f, 1.0f};
     static float diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
     static float specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    static float shininess = 40.0f;
 
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
 
     glCallList(listID);
 
