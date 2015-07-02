@@ -20,16 +20,16 @@ void Chamber::init() {
     room3.init();
     room4.init();
     room5.init();
-    video.init();
+    //video.init();
     listID=GenList();
 }
 
 GLint Chamber::GenList() {
     GLint lid=glGenLists(1);
     loadTextures();
-    
+
     glNewList(lid, GL_COMPILE);
-    
+
     room1.drawRoom(textures[2]);
     room2.drawRoom(textures[3]);
     room3.drawRoom(textures[4]);
@@ -37,65 +37,17 @@ GLint Chamber::GenList() {
     room5.drawRoom(textures[6]);
     drawgap(textures[7]);
     drawCeilingAndFloor();
-    
+
     glEndList();
     return lid;
 }
 
 void Chamber::drawChamber() {
-    /*
-    glEnable(GL_LIGHTING);
-    GLfloat light_ambient[] = {0.06f, 0.06f, 0.06f, 1.0f};
-    GLfloat light_diffuse[] = {0.1f, 0.1f, 0.1f, 1.0f};
-    GLfloat light_specular[] = {0.1f, 0.1f, 0.1f, 1.0f};
-    
-    GLfloat light1_pos[] = {3.5f, 2.8f, -2.5f};
-    
-    glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
-    glLightfv(GL_LIGHT1, GL_POSITION, light1_pos);
-    glEnable(GL_LIGHT1);
-    
-    GLfloat light2_pos[] = {-4.6f, 2.8f, -3.6f};
-    
-    glLightfv(GL_LIGHT2, GL_AMBIENT, light_ambient);
-    glLightfv(GL_LIGHT2, GL_DIFFUSE, light_diffuse);
-    glLightfv(GL_LIGHT2, GL_SPECULAR, light_specular);
-    glLightfv(GL_LIGHT2, GL_POSITION, light2_pos);
-    glEnable(GL_LIGHT2);
-    
-    GLfloat light3_pos[] = {-0.4f, 2.8f, 2.3f};
-    
-    glLightfv(GL_LIGHT3, GL_AMBIENT, light_ambient);
-    glLightfv(GL_LIGHT3, GL_DIFFUSE, light_diffuse);
-    glLightfv(GL_LIGHT3, GL_SPECULAR, light_specular);
-    glLightfv(GL_LIGHT3, GL_POSITION, light3_pos);
-    glEnable(GL_LIGHT3);
-    
-    GLfloat light4_diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat light4_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat light4_pos[] = {2.5f, 2.8f, 1.5f};
-    
-    glLightfv(GL_LIGHT4, GL_AMBIENT, light_ambient);
-    glLightfv(GL_LIGHT4, GL_DIFFUSE, light4_diffuse);
-    glLightfv(GL_LIGHT4, GL_SPECULAR, light4_specular);
-    glLightfv(GL_LIGHT4, GL_POSITION, light4_pos);
-    glEnable(GL_LIGHT4);
-    
-    GLfloat light5_pos[] = {5.5f, 2.8f, 3.5f};
-    
-    glLightfv(GL_LIGHT5, GL_AMBIENT, light_ambient);
-    glLightfv(GL_LIGHT5, GL_DIFFUSE, light4_diffuse);
-    glLightfv(GL_LIGHT5, GL_SPECULAR, light4_specular);
-    glLightfv(GL_LIGHT5, GL_POSITION, light5_pos);
-    glEnable(GL_LIGHT5);
-    */
-
     glCallList(listID);
-    video.play();
+
     drawSphere();
     drawDoor(textures[8]);
+    //video.play();
 }
 
 void Chamber::drawSphere() {
@@ -105,17 +57,17 @@ void Chamber::drawSphere() {
     scale+=0.02f;
     if (scale>0.8f)
         scale=0.36f;
-    
+
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, textures[tex]);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    
+
     glPushMatrix();
     glTranslatef(-4.6, 2.6, translate);
     glScalef(scale, scale, scale);
     glutSolidSphere(0.4, 50, 50);
     glPopMatrix();
-    
+
     glDisable(GL_TEXTURE_2D);
 }
 
@@ -129,13 +81,13 @@ void Chamber::drawDoor(GLuint doorTex) {
     glTranslatef(5, 0, 3.78);
     glRotatef(doorRotate, 0, 1, 0);
     glTranslatef(-5, 0, -3.78);
-    
+
     glBegin(GL_QUADS);
     glTexCoord2d(0, 0); glVertex3f(5, 0, 3);
     glTexCoord2d(1, 0); glVertex3f(5, 0, 3.78);
     glTexCoord2d(1, 1); glVertex3f(5, 2, 3.78);
     glTexCoord2d(0, 1); glVertex3f(5, 2, 3);
-    
+
     glTexCoord2d(0, 0); glVertex3f(5.1, 0, 3);
     glTexCoord2d(1, 0); glVertex3f(5.1, 0, 3.78);
     glTexCoord2d(1, 1); glVertex3f(5.1, 2, 3.78);

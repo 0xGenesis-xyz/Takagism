@@ -56,8 +56,12 @@ public:
     Chamber chamber;
     float getPerspAngle() { return perspAngle; }
     void init();
-    void printPos() { std::cout << x << " " << y << std::endl; }
+    void printPos() {
+        std::cout << "x = " << x << "; y = " << y << std::endl
+                  << "eye = " << camera.eye[0] << ", " << camera.eye[1] << ", " << camera.eye[2] << std::endl
+                  << "center = " << camera.center[0] << ", " << camera.center[1] << ", " << camera.center[2] << std::endl; }
     void drawScene();
+    void setLight();
     void screenCut(int width, int height);
     void stopMove();
     void stopTurn();

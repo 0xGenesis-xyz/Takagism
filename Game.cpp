@@ -336,18 +336,6 @@ void Game::updateZoomToFit(Object& obj) {
 }
 
 void Game::pickup() {
-    /*
-    for (int i=0; i<4; i++)
-        if (distance(collection[i].modelCenter)<RANGE && collection[i].display) {
-            collection[i].display=false;
-            std::cout<<"pick up "<<i<<std::endl;
-        }
-    if (distance(collection[4].modelCenter)<RANGE && collection[4].display && toPut && !collection[3].display) {
-        collection[4].display=false;
-        std::cout<<"pick up 4"<<std::endl;
-        chamber.door=!chamber.door;
-    }
-    */
     if (fitItem != -1) {
         collection[fitItem].display = false;
         if (fitItem == 4)
@@ -373,28 +361,10 @@ float Game::distance(float position[]) {
 }
 
 void Game::drawScene() {
-    glEnable(GL_LIGHTING);
-//    GLfloat light_ambient[] = {camera.intensity*0.1f, camera.intensity*0.1f, camera.intensity*0.1f, 1.0f};
-    GLfloat light_ambient[] = {camera.intensity, camera.intensity, camera.intensity, 1.0f};
-    GLfloat light_diffuse[] = {camera.intensity, camera.intensity, camera.intensity, 1.0f};
-    GLfloat light_specular[] = {camera.intensity, camera.intensity, camera.intensity, 1.0f};
-    GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2]};
     static float angle = 0;
     angle += M_PI / 180;
     if (angle >= 2 * M_PI)
         angle = 0;
-
-    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-    glLightfv(GL_LIGHT0, GL_POSITION, camera.eye);
-    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light_direction);
-    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 127.0);
-    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
-    if (camera.torch)
-        glEnable(GL_LIGHT0);
-    else
-        glDisable(GL_LIGHT0);
 
     switch (moving) {
     case FORWARD:
@@ -441,16 +411,50 @@ void Game::drawScene() {
         break;
     }
 
-    if (collection[0].display) collection[0].drawItem(90);
-    if (collection[1].display) collection[1].drawItem(270);
+    if (collection[0].display) collection[0].drawItem();
+    if (collection[1].display) collection[1].drawItem();
 
-    if (collection[4].display) collection[4].drawItem(180);
+    if (collection[4].display) collection[4].drawItem();
     for (int i=2; i<5; i++)
         if (collection[i].display)
             collection[i].drawItem();
     if (toPut)
         drawXXX();
+
     chamber.drawChamber();
+}
+
+void Game::setLight() {
+    glEnable(GL_LIGHTING);
+
+    GLfloat light_ambient[] = {camera.intensity*0.1f, camera.intensity*0.1f, camera.intensity*0.1f, 1.0f};
+    GLfloat torch_pos[] = {camera.eye[0], 1.3f, camera.eye[2], 1};
+    GLfloat light_pos[] = {-1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2], 1};
+
+    GLfloat light_torch[] = {1.0f, 1.0f, 1.0f, 1.0f};
+
+    // ambient
+    glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, light_ambient);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, light_ambient);
+    glLightfv(GL_LIGHT1, GL_POSITION, light_pos);
+    glEnable(GL_LIGHT1);
+
+    // torch
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_torch);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_torch);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_torch);
+    glLightfv(GL_LIGHT0, GL_POSITION, torch_pos);
+    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light_direction);
+    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 127.0);
+    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
+    glEnable(GL_LIGHT0);
+
+    if (camera.torch)
+        glEnable(GL_LIGHT0);
+    else
+        glDisable(GL_LIGHT0);
 }
 
 void Game::screenCut(int width, int height) {

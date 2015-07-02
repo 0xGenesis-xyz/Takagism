@@ -121,19 +121,19 @@ void display()
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(game.getPerspAngle(), (float)window_width/(float)window_height, 0.01f, 200.0f);
-
+    //glMatrixMode(GL_PROJECTION);
     //glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    //gluPerspective(game.getPerspAngle(), (float)window_width/(float)window_height, 0.01f, 200.0f);
 
     gluLookAt(game.camera.eye[0], game.camera.eye[1], game.camera.eye[2],
               game.camera.center[0], game.camera.center[1], game.camera.center[2],
               0, 1, 0);
+    game.setLight();
+    game.drawScene();
 
     glEnable(GL_DEPTH_TEST);
-
-    game.drawScene();
 
     glFlush();
     glutSwapBuffers();
@@ -146,8 +146,8 @@ void init() {
 /// Idle function
 void idle(void)
 {
-    game.chamber.video.drawNext();
-    
+    //game.chamber.video.drawNext();
+
     glutPostRedisplay();
 }
 
@@ -164,6 +164,7 @@ void reshape(int w, int h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(90.0f, (float)window_width/(float)window_height, 0.01f, 200.0f);
+    glMatrixMode(GL_MODELVIEW);
 
     glutPostRedisplay();
 }
