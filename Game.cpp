@@ -382,13 +382,6 @@ void Game::drawScene() {
     angle += M_PI / 180;
     if (angle >= 2 * M_PI)
         angle = 0;
-    //GLfloat light_direction[] = {static_cast<GLfloat>(sin(angle)), 0, static_cast<GLfloat>(cos(angle))};
-    //std::cout << camera.center[0] - camera.eye[0] << " " << camera.center[1] - camera.eye[1] << " " << camera.center[2] - camera.eye[2] << std::endl;
-    //GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[2]-camera.eye[2], camera.center[1]-camera.eye[1]};
-    //GLfloat light_direction[] = {camera.center[1]-camera.eye[1], camera.center[0]-camera.eye[0], camera.center[2]-camera.eye[2]};
-    //GLfloat light_direction[] = {camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2], camera.center[0]-camera.eye[0]};
-    //GLfloat light_direction[] = {camera.center[2]-camera.eye[2], camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1]};
-    //GLfloat light_direction[] = {camera.center[2]-camera.eye[2], camera.center[1]-camera.eye[1], camera.center[0]-camera.eye[0]};
 
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
@@ -447,7 +440,6 @@ void Game::drawScene() {
         break;
     }
 
-    chamber.drawChamber();
     if (collection[0].display) collection[0].drawItem(90);
     if (collection[1].display) collection[1].drawItem(270);
 
@@ -457,6 +449,7 @@ void Game::drawScene() {
             collection[i].drawItem();
     if (toPut)
         drawXXX();
+    chamber.drawChamber();
 }
 
 void Game::screenCut(int width, int height) {

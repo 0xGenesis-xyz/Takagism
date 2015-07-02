@@ -43,6 +43,7 @@ GLint Chamber::GenList() {
 }
 
 void Chamber::drawChamber() {
+    /*
     glEnable(GL_LIGHTING);
     GLfloat light_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f};
     GLfloat light_diffuse[] = {0.4f, 0.4f, 0.4f, 1.0f};
@@ -89,6 +90,7 @@ void Chamber::drawChamber() {
     glLightfv(GL_LIGHT5, GL_SPECULAR, light4_specular);
     glLightfv(GL_LIGHT5, GL_POSITION, light5_pos);
     glEnable(GL_LIGHT5);
+    */
 
     glCallList(listID);
 //    video.play();
