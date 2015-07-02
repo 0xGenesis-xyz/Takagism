@@ -20,7 +20,7 @@ void Chamber::init() {
     room3.init();
     room4.init();
     room5.init();
-    //video.init();
+    video.init();
     listID=GenList();
 }
 
@@ -43,9 +43,10 @@ GLint Chamber::GenList() {
 }
 
 void Chamber::drawChamber() {
-    static float ambient[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    static float diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    static float specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    static float para = 0.5f;
+    static float ambient[] = {para, para, para, 1.0f};
+    static float diffuse[] = {para, para, para, 1.0f};
+    static float specular[] = {para, para, para, 1.0f};
 
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
@@ -55,7 +56,7 @@ void Chamber::drawChamber() {
 
     drawSphere();
     drawDoor(textures[8]);
-    //video.play();
+    video.play();
 }
 
 void Chamber::drawSphere() {
