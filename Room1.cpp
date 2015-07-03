@@ -8,6 +8,7 @@
 
 #include <GLUT/GLUT.h>
 #include "Room1.h"
+#include "Wall.h"
 
 void Room1::drawRoom(GLuint texture) {
     drawWall(texture);
@@ -19,30 +20,13 @@ void Room1::drawWall(GLuint texture) {
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     glPushMatrix();
     glBegin(GL_QUADS);
-    glTexCoord2d(0, 0); glVertex3f(2, 0, -4);
-    glTexCoord2d(1, 0); glVertex3f(5, 0, -4);
-    glTexCoord2d(1, 1); glVertex3f(5, 3, -4);
-    glTexCoord2d(0, 1); glVertex3f(2, 3, -4);
-    
-    glTexCoord2d(0, 0); glVertex3f(5, 0, -4);
-    glTexCoord2d(1, 0); glVertex3f(5, 0, -1);
-    glTexCoord2d(1, 1); glVertex3f(5, 3, -1);
-    glTexCoord2d(0, 1); glVertex3f(5, 3, -4);
-    
-    glTexCoord2d(0, 0); glVertex3f(5, 0, -1-0.1);
-    glTexCoord2d(1, 0); glVertex3f(2, 0, -1-0.1);
-    glTexCoord2d(1, 1); glVertex3f(2, 3, -1-0.1);
-    glTexCoord2d(0, 1); glVertex3f(5, 3, -1-0.1);
-    
-    glTexCoord2d(0, 0); glVertex3f(2+0.1, 0, -1);
-    glTexCoord2d(0.3, 0); glVertex3f(2+0.1, 0, -2);
-    glTexCoord2d(0.3, 1); glVertex3f(2+0.1, 3, -2);
-    glTexCoord2d(0, 1); glVertex3f(2+0.1, 3, -1);
-    
-    glTexCoord2d(0, 0); glVertex3f(2+0.1, 0, -3);
-    glTexCoord2d(0.3, 0); glVertex3f(2+0.1, 0, -4);
-    glTexCoord2d(0.3, 1); glVertex3f(2+0.1, 3, -4);
-    glTexCoord2d(0, 1); glVertex3f(2+0.1, 3, -3);
+
+    Wall::drawWall(1, 1, 2, -4, 5, -4);
+    Wall::drawWall(1, 1, 5, -4, 5, -1);
+    Wall::drawWall(1, 1, 5, -1.1, 2, -1.1);
+    Wall::drawWall(0.3, 1, 2.1, -1, 2.1, -2);
+    Wall::drawWall(0.3, 1, 2.1, -3, 2.1, -4);
+
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);

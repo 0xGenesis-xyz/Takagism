@@ -424,7 +424,7 @@ void Game::setLight() {
     glEnable(GL_LIGHTING);
     static const float RATIO = 0.1f;
 
-    GLfloat light_ambient[] = {RATIO, RATIO, RATIO, 1.0f};
+    GLfloat light_ambient[] = {0.3, 0.3, 0.3, 1.0f};
     GLfloat torch_pos[] = {camera.eye[0], 1.1f, camera.eye[2], 1};
     GLfloat light_pos[] = {-1.0f, 1.0f, 1.0f, 1.0f};
     GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2], 1};
@@ -445,7 +445,7 @@ void Game::setLight() {
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_torch);
     glLightfv(GL_LIGHT0, GL_POSITION, torch_pos);
     glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, light_direction);
-    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 50.0);
+    glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 30.0);
     glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 90);
     glEnable(GL_LIGHT0);
 

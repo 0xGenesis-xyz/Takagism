@@ -76,60 +76,19 @@ void Room2::drawRoom(GLuint texture) {
 void Room2::drawWall(GLuint texture) {
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, texture);
-    //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     glPushMatrix();
     glBegin(GL_QUADS);
-    /*
-    glTexCoord2d(0, 0); glVertex3f(-5, 0, -4);
-    glTexCoord2d(7, 0); glVertex3f(2, 0, -4);
-    glTexCoord2d(7, 3); glVertex3f(2, 3, -4);
-    glTexCoord2d(0, 3); glVertex3f(-5, 3, -4);
-    */
 
-    Wall::drawWall(-5, -4, 2, -4);
-    Wall::drawWall(2, -1.1, -3.1, -1.1);
-    Wall::drawWall(-5, 2, -5, -4);
-    Wall::drawWall(-3.1, -1.1, -3.1, 2);
+    Wall::drawWall(7, 3, -5, -4, 2, -4);
+    Wall::drawWall(6, 3, -5, 2, -5, -4);
+    Wall::drawWall(5, 3, 2, -1.1, -3.1, -1.1);
+    Wall::drawWall(6, 3, -3.1, -1.1, -3.1, 2);
+    Wall::drawWall(1, 3, 1.9, -1, 1.9, -2);
+    Wall::drawWall(1, 3, 1.9, -3, 1.9, -4);
+    Wall::drawWall(0.5, 3, -5, 1.9, -4.5, 1.9);
+    Wall::drawWall(0.5, 3, -3.5, 1.9, -3, 1.9);
 
-    /*
-    glTexCoord2d(0, 0); glVertex3f(-5, 0, 2);
-    glTexCoord2d(6, 0); glVertex3f(-5, 0, -4);
-    glTexCoord2d(6, 3); glVertex3f(-5, 3, -4);
-    glTexCoord2d(0, 3); glVertex3f(-5, 3, 2);
-    */
-
-    /*
-    glTexCoord2d(0, 0); glVertex3f(2, 0, -1-0.1);
-    glTexCoord2d(5, 0); glVertex3f(-3-0.1, 0, -1-0.1);
-    glTexCoord2d(5, 3); glVertex3f(-3-0.1, 3, -1-0.1);
-    glTexCoord2d(0, 3); glVertex3f(2, 3, -1-0.1);
-    */
-
-    glTexCoord2d(0, 0); glVertex3f(-3-0.1, 0, -1-0.1);
-    glTexCoord2d(6, 0); glVertex3f(-3-0.1, 0, 2);
-    glTexCoord2d(6, 3); glVertex3f(-3-0.1, 3, 2);
-    glTexCoord2d(0, 3); glVertex3f(-3-0.1, 3, -1-0.1);
-
-    glTexCoord2d(0, 0); glVertex3f(2-0.1, 0, -1);
-    glTexCoord2d(1, 0); glVertex3f(2-0.1, 0, -2);
-    glTexCoord2d(1, 3); glVertex3f(2-0.1, 3, -2);
-    glTexCoord2d(0, 3); glVertex3f(2-0.1, 3, -1);
-
-    glTexCoord2d(0, 0); glVertex3f(2-0.1, 0, -3);
-    glTexCoord2d(1, 0); glVertex3f(2-0.1, 0, -4);
-    glTexCoord2d(1, 3); glVertex3f(2-0.1, 3, -4);
-    glTexCoord2d(0, 3); glVertex3f(2-0.1, 3, -3);
-
-    glTexCoord2d(0, 0); glVertex3f(-5, 0, 2-0.1);
-    glTexCoord2d(0.5, 0); glVertex3f(-4.5, 0, 2-0.1);
-    glTexCoord2d(0.5, 3); glVertex3f(-4.5, 3, 2-0.1);
-    glTexCoord2d(0, 3); glVertex3f(-5, 3, 2-0.1);
-
-    glTexCoord2d(0, 0); glVertex3f(-3.5, 0, 2-0.1);
-    glTexCoord2d(0.5, 0); glVertex3f(-3, 0, 2-0.1);
-    glTexCoord2d(0.5, 3); glVertex3f(-3, 3, 2-0.1);
-    glTexCoord2d(0, 3); glVertex3f(-3.5, 3, 2-0.1);
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);

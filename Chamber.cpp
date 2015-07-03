@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <GLUT/GLUT.h>
 #include "Chamber.h"
+#include "Wall.h"
 
 void Chamber::init() {
     translate=-3.6f;
@@ -47,11 +48,6 @@ void Chamber::drawChamber() {
     static float diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
     static float specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
     static float shininess = 40.0f;
-
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
-    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
 
     glCallList(listID);
 
@@ -93,27 +89,13 @@ void Chamber::drawDoor(GLuint doorTex) {
     glTranslatef(-5, 0, -3.78);
 
     glBegin(GL_QUADS);
-    glTexCoord2d(0, 0); glVertex3f(5, 0, 3);
-    glTexCoord2d(1, 0); glVertex3f(5, 0, 3.78);
-    glTexCoord2d(1, 1); glVertex3f(5, 2, 3.78);
-    glTexCoord2d(0, 1); glVertex3f(5, 2, 3);
-
-    glTexCoord2d(0, 0); glVertex3f(5.1, 0, 3);
-    glTexCoord2d(1, 0); glVertex3f(5.1, 0, 3.78);
-    glTexCoord2d(1, 1); glVertex3f(5.1, 2, 3.78);
-    glTexCoord2d(0, 1); glVertex3f(5.1, 2, 3);
+    Wall::drawWall(1, 1, 5, 3, 5, 3.78, 0, 2);
+    Wall::drawWall(1, 1, 5.1, 3, 5.1, 3.78, 0, 2);
     glEnd();
-    
+
     glBegin(GL_QUADS);
-    glTexCoord2d(0, 0); glVertex3f(5.1, 0, 3);
-    glTexCoord2d(1, 0); glVertex3f(5, 0, 3);
-    glTexCoord2d(1, 1); glVertex3f(5, 2, 3);
-    glTexCoord2d(0, 1); glVertex3f(5.1, 2, 3);
-    
-    glTexCoord2d(0, 0); glVertex3f(5.1, 2, 3);
-    glTexCoord2d(1, 0); glVertex3f(5, 2, 3.78);
-    glTexCoord2d(1, 1); glVertex3f(5, 2, 3.78);
-    glTexCoord2d(0, 1); glVertex3f(5.1, 2, 3);
+    Wall::drawWall(1, 1, 5.1, 3, 5, 3, 0, 2);
+    Wall::drawWall(1, 1, 5.1, 3, 5, 3.78, 2, 3);
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -125,35 +107,14 @@ void Chamber::drawgap(GLuint texture) {
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     glPushMatrix();
     glBegin(GL_QUADS);
-    glTexCoord2d(0, 0); glVertex3f(2-0.1, 0, -3);
-    glTexCoord2d(0.2, 0); glVertex3f(2+0.1, 0, -3);
-    glTexCoord2d(0.2, 1); glVertex3f(2+0.1, 3, -3);
-    glTexCoord2d(0, 1); glVertex3f(2-0.1, 3, -3);
 
-    glTexCoord2d(0, 0); glVertex3f(2-0.1, 0, -2);
-    glTexCoord2d(0.2, 0); glVertex3f(2+0.1, 0, -2);
-    glTexCoord2d(0.2, 1); glVertex3f(2+0.1, 3, -2);
-    glTexCoord2d(0, 1); glVertex3f(2-0.1, 3, -2);
-    
-    glTexCoord2d(0, 0); glVertex3f(-3.5, 0, 2-0.1);
-    glTexCoord2d(0.2, 0); glVertex3f(-3.5, 0, 2+0.1);
-    glTexCoord2d(0.2, 1); glVertex3f(-3.5, 3, 2+0.1);
-    glTexCoord2d(0, 1); glVertex3f(-3.5, 3, 2-0.1);
-    
-    glTexCoord2d(0, 0); glVertex3f(-4.5, 0, 2-0.1);
-    glTexCoord2d(0.2, 0); glVertex3f(-4.5, 0, 2+0.1);
-    glTexCoord2d(0.2, 1); glVertex3f(-4.5, 3, 2+0.1);
-    glTexCoord2d(0, 1); glVertex3f(-4.5, 3, 2-0.1);
-    
-    glTexCoord2d(0, 0); glVertex3f(-2, 0, 2-0.1);
-    glTexCoord2d(0.2, 0); glVertex3f(-2, 0, 2+0.1);
-    glTexCoord2d(0.2, 1); glVertex3f(-2, 3, 2+0.1);
-    glTexCoord2d(0, 1); glVertex3f(-2, 3, 2-0.1);
-    
-    glTexCoord2d(0, 0); glVertex3f(-0.1, 0, 1);
-    glTexCoord2d(0.2, 0); glVertex3f(0.1, 0, 1);
-    glTexCoord2d(0.2, 1); glVertex3f(0.1, 3, 1);
-    glTexCoord2d(0, 1); glVertex3f(-0.1, 3, 1);
+    Wall::drawWall(0.2, 1, 1.9, -3, 2.1, -3);
+    Wall::drawWall(0.2, 1, 1.9, -2, 2.1, -2);
+    Wall::drawWall(0.2, 1, -3.5, 1.9, -3.5, 2.1);
+    Wall::drawWall(0.2, 1, -4.5, 1.9, -4.5, 2.1);
+    Wall::drawWall(0.2, 1, -2, 1.9, -2, 2.1);
+    Wall::drawWall(0.2, 1, -0.1, 1, 0.1, 1);
+
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
