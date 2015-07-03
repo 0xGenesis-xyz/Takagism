@@ -83,7 +83,7 @@ void keyboard(unsigned char key, int x, int y)
             break;
         }
         case '-': {
-            if (game.camera.intensity>0)
+            if (game.camera.intensity>0.1)
                 game.camera.intensity-=0.1;
             break;
         }
@@ -146,7 +146,7 @@ void init() {
 /// Idle function
 void idle(void)
 {
-    //game.chamber.video.drawNext();
+    game.chamber.video.drawNext();
 
     glutPostRedisplay();
 }

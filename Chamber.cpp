@@ -21,7 +21,7 @@ void Chamber::init() {
     room3.init();
     room4.init();
     room5.init();
-    //video.init();
+    video.init();
     listID=GenList();
 }
 
@@ -53,7 +53,7 @@ void Chamber::drawChamber() {
 
     drawSphere();
     drawDoor(textures[8]);
-    //video.play();
+    video.play();
 }
 
 void Chamber::drawSphere() {
