@@ -424,7 +424,7 @@ void Game::setLight() {
     glEnable(GL_LIGHTING);
     static const float RATIO = 0.1f;
 
-    GLfloat light_ambient[] = {0.3, 0.3, 0.3, 1.0f};
+    GLfloat light_ambient[] = {0.1, 0.1, 0.1, 1.0f};
     GLfloat torch_pos[] = {camera.eye[0], 1.1f, camera.eye[2], 1};
     GLfloat light_pos[] = {-1.0f, 1.0f, 1.0f, 1.0f};
     GLfloat light_direction[] = {camera.center[0]-camera.eye[0], camera.center[1]-camera.eye[1], camera.center[2]-camera.eye[2], 1};
@@ -456,29 +456,21 @@ void Game::setLight() {
 }
 
 void Game::screenCut(int width, int height) {
-    //获取应用程序颜色缓冲区数组
     GLubyte* frameData=(GLubyte*)malloc(width*height*3);
     glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, frameData);
 
-    //创建IplImage结构 并指定结构头为适当格式
     IplImage* SnapImage=cvCreateImageHeader(cvSize(width, height), IPL_DEPTH_8U, 3);
-    //将刚创建的IplImage结构的DATA数据指针指向之前获取到的缓冲区数组
     cvSetData(SnapImage, frameData, width*3);
 
-    //由于opencv里颜色data存放的特点 这里要进行下上下翻转
-    cvFlip(SnapImage, SnapImage, 0);//上下翻转
-    //这里要进行下RGB-BGR的转换...
-    cvCvtColor(SnapImage, SnapImage, CV_RGB2BGR); //转格式
+    cvFlip(SnapImage, SnapImage, 0);
+    cvCvtColor(SnapImage, SnapImage, CV_RGB2BGR);
 
-    //保存图片
     time_t t=time(0);
     char strTime[64];
-//    ZeroMemory(strTime,sizeof(strTime));
     strftime(strTime, 64, "%Y%m%d%H%M%S", localtime(&t));
-    strcat(strTime, ".jpg");//保存为年月日时分秒.jpg
+    strcat(strTime, ".jpg");
     cvSaveImage(strTime, SnapImage);
 
-    //释放内存
     cvReleaseImage(&SnapImage);
     free(frameData);
 }
